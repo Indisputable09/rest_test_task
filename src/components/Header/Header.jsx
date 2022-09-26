@@ -1,7 +1,7 @@
 import ButtonsBlock from 'ButtonsBlock';
 import { Box } from 'components/Box';
 import { HeaderContainer } from 'components/Container/Container.styled';
-import Logo from 'components/Logo';
+import Logo from 'Icons/Logo';
 
 const Header = () => {
   return (

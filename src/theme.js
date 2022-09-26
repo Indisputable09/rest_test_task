@@ -6,7 +6,7 @@ export const theme = {
     hover: '#FFE302',
     disabled: '#B4B4B4',
   },
-  space: [0, 2, 4, 16, 20, 32, 60, 128, 256, 'auto'],
+  space: [0, 2, 13, 16, 20, 32, 60, 128, 256, 'auto'],
   fontSizes: {
     m: '16px',
     l: '40px',
@@ -43,6 +43,7 @@ export const theme = {
     sm: '4px',
     md: '8px',
     lg: '16px',
+    exlg: '80px',
     round: '50%',
   },
   position: {

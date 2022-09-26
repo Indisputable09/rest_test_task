@@ -6,6 +6,8 @@ export const ButtonStyled = styled(Button)`
   border: ${p => p.theme.borders.none};
   background-color: ${p => p.theme.colors.primary};
   transition: ${p => p.theme.transition.backgroundColor};
+  min-width: 100px;
+  min-height: 34px;
 
   :hover,
   :focus {
@@ -13,7 +15,10 @@ export const ButtonStyled = styled(Button)`
   }
 `;
 
-export const ButtonHeader = styled(ButtonStyled)`
-  width: 100px;
-  height: 34px;
+export const SignUpButton = styled(ButtonStyled)`
+  padding: 4px 22px;
+`;
+
+export const UsersButton = styled(ButtonStyled)`
+  padding: 4px 29px;
 `;

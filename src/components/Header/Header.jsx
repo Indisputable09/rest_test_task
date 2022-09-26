@@ -1,4 +1,4 @@
-import ButtonsBlock from 'ButtonsBlock';
+import ButtonsBlock from 'components/ButtonsBlock';
 import { Box } from 'components/Box';
 import { HeaderContainer } from 'components/Container/Container.styled';
 import Logo from 'Icons/Logo';
@@ -14,15 +14,3 @@ const Header = () => {
   );
 };
 export default Header;
-
-/*<Box as="header">
-      <Box
-        display="flex"
-        alignContent="center"
-        justifyContent="center"
-        as={Container}
-      >
-        <Logo />
-        <ButtonsBlock />
-      </Box>
-    </Box> */

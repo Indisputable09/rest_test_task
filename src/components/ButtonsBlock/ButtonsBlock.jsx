@@ -1,4 +1,4 @@
-import { ButtonHeader } from 'Button/Button.styled';
+import { SignUpButton, UsersButton } from 'components/Button/Button.styled';
 import { Box } from 'components/Box';
 import { ButtonListItem } from './ButtonsBlock.styled';
 
@@ -6,10 +6,10 @@ const ButtonsBlock = () => {
   return (
     <Box as="ul" display="flex">
       <ButtonListItem>
-        <ButtonHeader>Users</ButtonHeader>
+        <UsersButton>Users</UsersButton>
       </ButtonListItem>
       <ButtonListItem>
-        <ButtonHeader>Sign up</ButtonHeader>
+        <SignUpButton>Sign up</SignUpButton>
       </ButtonListItem>
     </Box>
   );

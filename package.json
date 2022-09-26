@@ -2,7 +2,7 @@
   "name": "abz.agency_test_task",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Indisputable09.github.io/abz.agency_test_task/",
+  "homepage": "https://Indisputable09.github.io/rest_test_task/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",

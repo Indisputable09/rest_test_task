@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rest_test_task/static/css/main.d3fcf97e.css",
-    "main.js": "/rest_test_task/static/js/main.3cbaff23.js",
+    "main.js": "/rest_test_task/static/js/main.4b389354.js",
     "static/media/largeDesktop-hero_bg@2x.jpg": "/rest_test_task/static/media/largeDesktop-hero_bg@2x.439113e629085e405b61.jpg",
     "static/media/desktop-hero_bg@2x.jpg": "/rest_test_task/static/media/desktop-hero_bg@2x.2febd21fb16019a5d939.jpg",
     "static/media/tablet-hero_bg@2x.jpg": "/rest_test_task/static/media/tablet-hero_bg@2x.3d3646c2ecc1025cb3ed.jpg",
@@ -13,10 +13,10 @@
     "static/media/sprite.svg": "/rest_test_task/static/media/sprite.0c0ea7214f8a150f75a14a4be8a0d105.svg",
     "index.html": "/rest_test_task/index.html",
     "main.d3fcf97e.css.map": "/rest_test_task/static/css/main.d3fcf97e.css.map",
-    "main.3cbaff23.js.map": "/rest_test_task/static/js/main.3cbaff23.js.map"
+    "main.4b389354.js.map": "/rest_test_task/static/js/main.4b389354.js.map"
   },
   "entrypoints": [
     "static/css/main.d3fcf97e.css",
-    "static/js/main.3cbaff23.js"
+    "static/js/main.4b389354.js"
   ]
 }

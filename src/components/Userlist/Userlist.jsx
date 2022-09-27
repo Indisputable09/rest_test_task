@@ -1,6 +1,6 @@
 // import UserItem from 'components/UserItem';
 
-const Userlist = ({ users, children }) => {
+const Userlist = ({ children }) => {
   return <ul>{children}</ul>;
 };
 

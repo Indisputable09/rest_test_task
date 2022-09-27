@@ -7,12 +7,14 @@ import Userlist from 'components/Userlist';
 import { fetchUsers, PER_PAGE } from 'services/API';
 import UserItem from 'components/UserItem';
 import { ShowMoreButton } from 'components/Button/Button.styled';
+import Registration from 'components/Registration';
 
 export const App = () => {
   const { idle, pending, resolved, rejected } = Status;
   const [fetchedUsers, setfetchedUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState(idle);
+  const [position, setPosition] = useState('');
 
   useEffect(() => {
     (async function asyncFetchUsers() {
@@ -45,6 +47,26 @@ export const App = () => {
     }, 500);
   };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const phone = e.target.phone.value;
+    const chosenPosition = position;
+    const values = {
+      name,
+      email,
+      phone,
+      chosenPosition,
+    };
+    console.log('values ', values);
+  };
+
+  const getPosition = pos => {
+    console.log('pos ', pos);
+    setPosition(pos);
+  };
+
   const ENOUGH_USERS = fetchedUsers.length % PER_PAGE === 0;
   return (
     <>
@@ -53,6 +75,7 @@ export const App = () => {
       <main>
         <Hero />
         <Userlist>
+          <h2>Working with GET request</h2>
           <UserItem fetchedUsers={fetchedUsers} />
           {status === 'RESOLVED' && ENOUGH_USERS && (
             <ShowMoreButton onClick={handlePageIncrement}>
@@ -60,6 +83,7 @@ export const App = () => {
             </ShowMoreButton>
           )}
         </Userlist>
+        <Registration onSubmit={handleSubmit} getPosition={getPosition} />
       </main>
     </>
   );

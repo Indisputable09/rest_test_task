@@ -1,5 +1,7 @@
-const Userlist = ({ users }) => {
-  return users.map(user => <li key={user.id}>{user.id}</li>);
+// import UserItem from 'components/UserItem';
+
+const Userlist = ({ users, children }) => {
+  return <ul>{children}</ul>;
 };
 
 export default Userlist;

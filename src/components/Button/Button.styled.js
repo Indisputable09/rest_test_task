@@ -22,3 +22,7 @@ export const SignUpButton = styled(ButtonStyled)`
 export const UsersButton = styled(ButtonStyled)`
   padding: 4px 29px;
 `;
+
+export const ShowMoreButton = styled(ButtonStyled)`
+  padding: 4px 18px 4px 19px;
+`;

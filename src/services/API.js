@@ -48,7 +48,7 @@ export async function postUser(credentials = {}) {
       { body: credentials },
       {
         headers: {
-          Authorization: `Token ${token}`,
+          Token: token,
         },
       }
     );

@@ -20,6 +20,8 @@ const SignupSchema = object().shape({
   email: string()
     .required(requiredError)
     .matches(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, emailError)
+    .min(2)
+    .max(100)
     .email(),
   number: string()
     .required(requiredError)

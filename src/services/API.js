@@ -41,17 +41,20 @@ export async function postUser(credentials = {}) {
   try {
     const responseToken = await axios.get('token');
     const token = responseToken.data.token;
+    const postData = {
+      name: credentials.name,
+      email: credentials.email,
+      phone: credentials.phone,
+      position_id: credentials.position_id,
+      photo: credentials.photo,
+    };
+    console.log('~ postData', postData);
 
-    console.log('~ token', token);
-    const response = await axios.post(
-      'users',
-      { body: credentials },
-      {
-        headers: {
-          Token: token,
-        },
-      }
-    );
+    const response = await axios.post('users', postData, {
+      headers: {
+        Token: token,
+      },
+    });
     console.log('~ response', response);
   } catch (error) {
     console.log(error);

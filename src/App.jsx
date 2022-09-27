@@ -60,13 +60,22 @@ export const App = () => {
       position_id: position,
       photo: file,
     };
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('position_id', position);
+    formData.append('photo', file);
     postUser(values);
-    console.log('~ values', values);
+
+    // postUser(formData);
+    // console.log('~ values', values);
   };
 
   const handleFileChange = e => {
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
+      console.log('~ e.target.files[0]', e.target.files[0]);
     }
     const reader = new FileReader();
 

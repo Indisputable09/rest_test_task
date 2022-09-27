@@ -16,26 +16,29 @@ export const App = () => {
   const [status, setStatus] = useState(idle);
   const [position, setPosition] = useState('');
   const [file, setFile] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    (async function asyncFetchUsers() {
-      try {
-        setStatus(pending);
-        const { users } = await fetchUsers(page);
-        if (!users ?? users.length === 0) {
-          setStatus(idle);
+    if (loggedIn) {
+      (async function asyncFetchUsers() {
+        try {
+          setStatus(pending);
+          const { users } = await fetchUsers(page);
+          if (!users ?? users.length === 0) {
+            setStatus(idle);
+            return;
+          }
+          setStatus(resolved);
+          console.log('~ fetchedUsers', users);
+          setfetchedUsers(prevUsers => [...prevUsers, ...users]);
           return;
+        } catch (error) {
+          console.log(error);
+          setStatus(rejected);
         }
-        setStatus(resolved);
-        console.log('~ fetchedUsers', users);
-        setfetchedUsers(prevUsers => [...prevUsers, ...users]);
-        return;
-      } catch (error) {
-        console.log(error);
-        setStatus(rejected);
-      }
-    })();
-  }, [idle, page, pending, rejected, resolved]);
+      })();
+    }
+  }, [idle, loggedIn, page, pending, rejected, resolved]);
 
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);
@@ -48,7 +51,7 @@ export const App = () => {
     }, 500);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
@@ -60,16 +63,10 @@ export const App = () => {
       position_id: position,
       photo: file,
     };
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('position_id', position);
-    formData.append('photo', file);
-    postUser(values);
-
-    // postUser(formData);
-    // console.log('~ values', values);
+    const postResponse = await postUser(values);
+    if (postResponse.success) {
+      setLoggedIn(true);
+    }
   };
 
   const handleFileChange = e => {
@@ -118,15 +115,17 @@ export const App = () => {
       <Header />
       <main>
         <Hero />
-        <Userlist>
-          <h2>Working with GET request</h2>
-          <UserItem fetchedUsers={fetchedUsers} />
-          {status === 'RESOLVED' && ENOUGH_USERS && (
-            <ShowMoreButton onClick={handlePageIncrement}>
-              Show more
-            </ShowMoreButton>
-          )}
-        </Userlist>
+        {loggedIn && (
+          <Userlist>
+            <h2>Working with GET request</h2>
+            <UserItem fetchedUsers={fetchedUsers} />
+            {status === 'RESOLVED' && ENOUGH_USERS && (
+              <ShowMoreButton onClick={handlePageIncrement}>
+                Show more
+              </ShowMoreButton>
+            )}
+          </Userlist>
+        )}
         <Registration
           onSubmit={handleSubmit}
           getPosition={getPosition}

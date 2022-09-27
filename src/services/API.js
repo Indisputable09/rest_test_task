@@ -48,14 +48,15 @@ export async function postUser(credentials = {}) {
       position_id: credentials.position_id,
       photo: credentials.photo,
     };
-    console.log('~ postData', postData);
 
     const response = await axios.post('users', postData, {
       headers: {
         Token: token,
+        'Content-Type': 'multipart/form-data',
       },
     });
     console.log('~ response', response);
+    return response.data;
   } catch (error) {
     console.log(error);
   }

@@ -27,3 +27,33 @@ export async function fetchPositions() {
     console.log(error);
   }
 }
+
+// export async function getToken() {
+//   try {
+//     const token = await axios.get('token');
+//     return token.data.token;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+export async function postUser(credentials = {}) {
+  try {
+    const responseToken = await axios.get('token');
+    const token = responseToken.data.token;
+
+    console.log('~ token', token);
+    const response = await axios.post(
+      'users',
+      { body: credentials },
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
+    );
+    console.log('~ response', response);
+  } catch (error) {
+    console.log(error);
+  }
+}

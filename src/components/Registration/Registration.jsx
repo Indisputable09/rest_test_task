@@ -32,7 +32,12 @@ const FormError = ({ name }) => {
   );
 };
 
-const Registration = ({ onSubmit, getPosition }) => {
+const Registration = ({
+  onSubmit,
+  getPosition,
+  handleFileChange,
+  validateSelectedFile,
+}) => {
   return (
     <>
       <h2>Working with POST request</h2>
@@ -76,7 +81,19 @@ const Registration = ({ onSubmit, getPosition }) => {
           />
           <FormError name="number" />
           <Positions getPosition={getPosition} />
-          <button type="submit">Sign up</button>
+          <Field
+            id="file"
+            type="file"
+            name="file"
+            placeholder="Photo"
+            onChange={handleFileChange}
+            accept="image/jpeg"
+            required
+          />
+          <FormError name="file" />
+          <button type="submit" onClick={validateSelectedFile}>
+            Sign up
+          </button>
         </Form>
       </Formik>
     </>

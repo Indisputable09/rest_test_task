@@ -5,6 +5,7 @@ import { fetchPositions } from 'services/API';
 const Positions = ({ getPosition }) => {
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState('');
+  const [selectedPositionId, setSelectedPositionId] = useState('');
   useEffect(() => {
     (async function asyncFetchPositions() {
       try {
@@ -17,16 +18,18 @@ const Positions = ({ getPosition }) => {
   }, []);
 
   useEffect(() => {
-    getPosition(selectedPosition);
-  }, [getPosition, selectedPosition]);
+    getPosition(+selectedPositionId);
+  }, [getPosition, selectedPositionId]);
 
   const handlePositionChange = e => {
     setSelectedPosition(e.currentTarget.value);
+    setSelectedPositionId(e.currentTarget.id);
   };
 
   return positions.map(({ id, name }) => (
     <label key={id}>
       <Field
+        id={id}
         type="radio"
         name={name}
         value={name}

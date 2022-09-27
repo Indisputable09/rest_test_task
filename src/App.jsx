@@ -4,7 +4,7 @@ import { GlobalStyle } from 'components/GlobalStyle';
 import Header from 'components/Header';
 import Hero from 'components/Hero';
 import Userlist from 'components/Userlist';
-import { fetchUsers, PER_PAGE } from 'services/API';
+import { fetchUsers, PER_PAGE, postUser } from 'services/API';
 import UserItem from 'components/UserItem';
 import { ShowMoreButton } from 'components/Button/Button.styled';
 import Registration from 'components/Registration';
@@ -15,6 +15,7 @@ export const App = () => {
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState(idle);
   const [position, setPosition] = useState('');
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     (async function asyncFetchUsers() {
@@ -52,18 +53,52 @@ export const App = () => {
     const name = e.target.name.value;
     const email = e.target.email.value;
     const phone = e.target.phone.value;
-    const chosenPosition = position;
     const values = {
       name,
       email,
       phone,
-      chosenPosition,
+      position_id: position,
+      photo: file,
     };
-    console.log('values ', values);
+    postUser(values);
+    console.log('~ values', values);
+  };
+
+  const handleFileChange = e => {
+    if (e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
+    const reader = new FileReader();
+
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = e => {
+      const image = new Image();
+      image.src = e.target.result;
+      image.onload = e => {
+        const height = e.target.height;
+        const width = e.target.width;
+        if (height > 70 || width > 70) {
+          alert('Height and Width must not exceed 70px.');
+          return false;
+        }
+        // alert('Uploaded image has valid Height and Width.');
+        return true;
+      };
+    };
+  };
+
+  const validateSelectedFile = () => {
+    const MAX_FILE_SIZE = 5120;
+
+    const fileSizeKiloBytes = file.size / 1024;
+
+    if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+      alert('File size is greater than maximum limit');
+      return;
+    }
   };
 
   const getPosition = pos => {
-    console.log('pos ', pos);
     setPosition(pos);
   };
 
@@ -83,7 +118,12 @@ export const App = () => {
             </ShowMoreButton>
           )}
         </Userlist>
-        <Registration onSubmit={handleSubmit} getPosition={getPosition} />
+        <Registration
+          onSubmit={handleSubmit}
+          getPosition={getPosition}
+          handleFileChange={handleFileChange}
+          validateSelectedFile={validateSelectedFile}
+        />
       </main>
     </>
   );

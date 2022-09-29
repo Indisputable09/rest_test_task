@@ -55,7 +55,6 @@ export async function postUser(credentials = {}) {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log('~ response', response);
     return response.data;
   } catch (error) {
     console.log(error);

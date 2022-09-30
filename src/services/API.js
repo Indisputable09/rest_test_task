@@ -28,28 +28,26 @@ export async function fetchPositions() {
   }
 }
 
-// export async function getToken() {
-//   try {
-//     const token = await axios.get('token');
-//     return token.data.token;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+export async function getToken() {
+  try {
+    const token = await axios.get('token');
+    return token.data.token;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function postUser(credentials = {}) {
   try {
-    const responseToken = await axios.get('token');
-    const token = responseToken.data.token;
-    const postData = {
-      name: credentials.name,
-      email: credentials.email,
-      phone: credentials.phone,
-      position_id: credentials.position_id,
-      photo: credentials.photo,
-    };
+    const token = await getToken();
+    const formData = new FormData();
+    formData.append('name', credentials.name);
+    formData.append('email', credentials.email);
+    formData.append('phone', credentials.phone);
+    formData.append('position_id', credentials.position_id);
+    formData.append('photo', credentials.photo);
 
-    const response = await axios.post('users', postData, {
+    const response = await axios.post('users', formData, {
       headers: {
         Token: token,
         'Content-Type': 'multipart/form-data',

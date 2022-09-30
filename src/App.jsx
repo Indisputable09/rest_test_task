@@ -18,7 +18,13 @@ export const App = () => {
   const [file, setFile] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const USER_ID_LS = 'User_ID';
+
   useEffect(() => {
+    const userId = localStorage.getItem(USER_ID_LS);
+    if (userId) {
+      setLoggedIn(true);
+    }
     if (loggedIn) {
       (async function asyncFetchUsers() {
         try {
@@ -64,15 +70,16 @@ export const App = () => {
       photo: file,
     };
     const postResponse = await postUser(values);
+    console.log('~ postResponse', postResponse);
     if (postResponse.success) {
       setLoggedIn(true);
+      localStorage.setItem(USER_ID_LS, postResponse.user_id);
     }
   };
 
   const handleFileChange = e => {
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
-      console.log('~ e.target.files[0]', e.target.files[0]);
     }
     const reader = new FileReader();
 

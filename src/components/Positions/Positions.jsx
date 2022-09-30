@@ -1,8 +1,10 @@
 import { Field } from 'formik';
+import { useUsers } from 'hooks/UsersContext';
 import { useEffect, useState } from 'react';
 import { fetchPositions } from 'services/API';
 
-const Positions = ({ getPosition }) => {
+const Positions = () => {
+  const { getPosition } = useUsers();
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState('');
   const [selectedPositionId, setSelectedPositionId] = useState('');

@@ -82,7 +82,7 @@ const Registration = ({
             required
           />
           <FormError name="number" />
-          <Positions getPosition={getPosition} />
+          <Positions />
           <Field
             id="file"
             type="file"

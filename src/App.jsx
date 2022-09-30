@@ -4,21 +4,23 @@ import { GlobalStyle } from 'components/GlobalStyle';
 import Header from 'components/Header';
 import Hero from 'components/Hero';
 import Userlist from 'components/Userlist';
-import { fetchUsers, PER_PAGE, postUser } from 'services/API';
+import { fetchUsers, getUserById, PER_PAGE, postUser } from 'services/API';
 import UserItem from 'components/UserItem';
 import { ShowMoreButton } from 'components/Button/Button.styled';
 import Registration from 'components/Registration';
+import { UsersContext } from 'hooks/UsersContext';
+import Loader from 'Icons/Loader';
 
 export const App = () => {
   const { idle, pending, resolved, rejected } = Status;
+  const USER_ID_LS = 'User_ID';
   const [fetchedUsers, setfetchedUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState(idle);
-  const [position, setPosition] = useState('');
+  const [position, setPosition] = useState(null);
   const [file, setFile] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
-
-  const USER_ID_LS = 'User_ID';
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const userId = localStorage.getItem(USER_ID_LS);
@@ -30,6 +32,8 @@ export const App = () => {
         try {
           setStatus(pending);
           const { users } = await fetchUsers(page);
+          const { name } = await getUserById(userId);
+          setUser(name);
           if (!users ?? users.length === 0) {
             setStatus(idle);
             return;
@@ -119,27 +123,41 @@ export const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Header />
-      <main>
-        <Hero />
-        {loggedIn && (
-          <Userlist>
-            <h2>Working with GET request</h2>
-            <UserItem fetchedUsers={fetchedUsers} />
-            {status === 'RESOLVED' && ENOUGH_USERS && (
-              <ShowMoreButton onClick={handlePageIncrement}>
-                Show more
-              </ShowMoreButton>
-            )}
-          </Userlist>
+      <UsersContext.Provider
+        value={{
+          userName: user,
+          getPosition,
+        }}
+      >
+        {status === 'PENDING' ? (
+          <Loader />
+        ) : (
+          <>
+            <Header />
+            <Loader />
+            {/* <Preloader /> */}
+            <main>
+              <Hero />
+              {loggedIn && (
+                <Userlist>
+                  <h2>Working with GET request</h2>
+                  <UserItem fetchedUsers={fetchedUsers} />
+                  {status === 'RESOLVED' && ENOUGH_USERS && (
+                    <ShowMoreButton onClick={handlePageIncrement}>
+                      Show more
+                    </ShowMoreButton>
+                  )}
+                </Userlist>
+              )}
+              <Registration
+                onSubmit={handleSubmit}
+                handleFileChange={handleFileChange}
+                validateSelectedFile={validateSelectedFile}
+              />
+            </main>
+          </>
         )}
-        <Registration
-          onSubmit={handleSubmit}
-          getPosition={getPosition}
-          handleFileChange={handleFileChange}
-          validateSelectedFile={validateSelectedFile}
-        />
-      </main>
+      </UsersContext.Provider>
     </>
   );
 };

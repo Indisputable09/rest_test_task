@@ -37,6 +37,21 @@ export async function getToken() {
   }
 }
 
+export async function getUserById(id) {
+  try {
+    const token = await getToken();
+    const user = await axios.get(`users/${id}`, {
+      headers: {
+        Token: token,
+      },
+    });
+    console.log('User ', user);
+    return user.data.user;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function postUser(credentials = {}) {
   try {
     const token = await getToken();

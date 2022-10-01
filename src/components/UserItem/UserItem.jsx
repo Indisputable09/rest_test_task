@@ -1,16 +1,26 @@
-import { UserCard } from './UserItem.styled';
+import { useUsers } from 'hooks/UsersContext';
+import {
+  UserListItem,
+  UserCard,
+  UserItemImg,
+  UserItemName,
+  UserItemAddInfo,
+} from './UserItem.styled';
 
-const UserItem = ({ fetchedUsers }) => {
+const UserItem = () => {
+  const { fetchedUsers } = useUsers();
   return fetchedUsers.map(({ id, name, photo, position, email, phone }) => (
-    <li key={id}>
+    <UserListItem key={id}>
       <UserCard>
-        <img src={photo} alt={name} />
-        <p>{name}</p>
-        <p>{position}</p>
-        <p>{email}</p>
-        <p>{phone}</p>
+        <UserItemImg src={photo} alt={name} />
+        <UserItemName>{name}</UserItemName>
+        <UserItemAddInfo>
+          {position} <br />
+          {email} <br />
+          {phone}
+        </UserItemAddInfo>
       </UserCard>
-    </li>
+    </UserListItem>
   ));
 };
 

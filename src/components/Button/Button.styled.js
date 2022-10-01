@@ -8,6 +8,9 @@ export const ButtonStyled = styled(Button)`
   transition: ${p => p.theme.transition.backgroundColor};
   min-width: 100px;
   min-height: 34px;
+  font-size: ${p => p.theme.fontSizes.m};
+  line-height: ${p => p.theme.lineHeights.body};
+  font-weight: 400;
 
   :hover,
   :focus {
@@ -25,4 +28,5 @@ export const UsersButton = styled(ButtonStyled)`
 
 export const ShowMoreButton = styled(ButtonStyled)`
   padding: 4px 18px 4px 19px;
+  margin-top: 50px;
 `;

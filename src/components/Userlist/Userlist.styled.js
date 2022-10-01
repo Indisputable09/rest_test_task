@@ -1,5 +1,20 @@
 import styled from 'styled-components';
 
+export const UserListGrid = styled.ul`
+  display: grid;
+  grid-gap: 20px;
+  justify-content: center;
+  grid-template-columns: repeat(1, 328px);
+  @media screen and (min-width: 768px) {
+    grid-gap: 16px;
+    grid-template-columns: repeat(2, 344px);
+  }
+  @media screen and (min-width: 1024px) {
+    grid-gap: 29px;
+    grid-template-columns: repeat(3, 282px);
+  }
+`;
+
 export const UserListTitle = styled.h2`
   max-width: 328px;
   text-align: center;

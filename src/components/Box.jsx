@@ -9,7 +9,7 @@ import {
   border,
   position,
   // shadow,
-  // typography,
+  typography,
 } from 'styled-system';
 
 export const Box = styled('section')(
@@ -20,7 +20,7 @@ export const Box = styled('section')(
   grid,
   background,
   border,
-  position
+  position,
   // shadow,
-  // typography
+  typography
 );

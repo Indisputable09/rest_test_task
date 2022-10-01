@@ -12,6 +12,7 @@ import {
   NumberExample,
   PositionsBlock,
   PositionsFileBlock,
+  PositionsTitle,
   PostTitle,
 } from './Registration.styled';
 import { SignUpButton } from 'components/Button/Button.styled';
@@ -49,11 +50,22 @@ const FormError = ({ name }) => {
 };
 
 const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState('');
+  const [values, setValues] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    position: '',
+    file: [],
+  });
   const handleFileChange = e => {
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
       getFile(e.target.files[0]);
+      setValues(prev => ({
+        ...prev,
+        [e.target.name]: [e.target.files[0]],
+      }));
     }
     const reader = new FileReader();
 
@@ -73,6 +85,23 @@ const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
       };
     };
   };
+
+  const handleValuesChange = e => {
+    setValues(prev => ({
+      ...prev,
+      [e.target.name]: [e.target.value],
+    }));
+  };
+
+  const handlePositionNumberChange = positionNumber => {
+    setValues(prev => ({
+      ...prev,
+      position: positionNumber,
+    }));
+  };
+
+  const inputValues = Object.values(values);
+  const emptyValues = inputValues.some(item => item.length === 0);
 
   return (
     <>
@@ -94,6 +123,8 @@ const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
               pattern={NAME_MATCH}
               placeholder="Name"
               required
+              onChange={handleValuesChange}
+              value={values.name}
             />
           </InputLabel>
           <FormError name="name" />
@@ -105,6 +136,8 @@ const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
               pattern="^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$"
               placeholder="Email"
               required
+              onChange={handleValuesChange}
+              value={values.email}
             />
           </InputLabel>
           <FormError name="email" />
@@ -116,16 +149,20 @@ const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
               pattern="^[+]{0,1}380([0-9]{9})$"
               placeholder="Number"
               required
+              onChange={handleValuesChange}
+              value={values.phone}
             />
             <NumberExample>+38 (XXX) XXX - XX - XX</NumberExample>
           </InputLabel>
           <FormError name="number" />
           <PositionsFileBlock>
             <PositionsBlock>
-              <p>Select your position</p>
-              <Positions />
+              <PositionsTitle>Select your position</PositionsTitle>
+              <Positions
+                handlePositionNumberChange={handlePositionNumberChange}
+                values={values}
+              />
             </PositionsBlock>
-            {/*  */}
             <FileUploadBlock>
               <FileUploadInput
                 type="file"
@@ -139,25 +176,10 @@ const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
                 {file ? file.name : 'Upload your photo'}
               </FileUploadLabel>
             </FileUploadBlock>
-            {/* <Test>
-              <FileLabel>
-                Upload
-                <FileInput
-                  id="file"
-                  type="file"
-                  name="file"
-                  placeholder="Photo"
-                  onChange={handleFileChange}
-                  accept="image/jpeg"
-                  required
-                />
-              </FileLabel>
-            </Test> */}
           </PositionsFileBlock>
           <FormError name="file" />
-          {/*  */}
           <SignUpButton
-            // disabled={true}
+            disabled={emptyValues}
             type="submit"
             onClick={validateSelectedFile}
           >

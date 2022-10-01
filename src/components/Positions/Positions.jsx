@@ -1,9 +1,10 @@
+import { PositionsItem } from 'components/Registration/Registration.styled';
 import { Field } from 'formik';
 import { useUsers } from 'hooks/UsersContext';
 import { useEffect, useState } from 'react';
 import { fetchPositions } from 'services/API';
 
-const Positions = () => {
+const Positions = ({ handlePositionNumberChange, values }) => {
   const { getPosition } = useUsers();
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState('');
@@ -26,10 +27,11 @@ const Positions = () => {
   const handlePositionChange = e => {
     setSelectedPosition(e.currentTarget.value);
     setSelectedPositionId(e.currentTarget.id);
+    handlePositionNumberChange(e.currentTarget.id);
   };
 
   return positions.map(({ id, name }) => (
-    <label key={id}>
+    <PositionsItem key={id}>
       <Field
         id={id}
         type="radio"
@@ -39,7 +41,7 @@ const Positions = () => {
         onChange={handlePositionChange}
       />
       {name}
-    </label>
+    </PositionsItem>
   ));
 };
 

@@ -18,15 +18,19 @@ export const FormInput = styled(Field)`
   outline: none;
   border: none;
   padding: 14px 0 14px ${p => p.theme.space[3]}px;
+
+  @media screen and (min-width: 768px) {
+    width: 380px;
+  }
 `;
 
 export const PositionsFileBlock = styled.div`
   width: 328px;
-`;
 
-// export const FileInput = styled(FormInput)`
-//   display: none;
-// `;
+  @media screen and (min-width: 768px) {
+    width: 380px;
+  }
+`;
 
 export const InputLabel = styled.label`
   position: relative;
@@ -41,7 +45,7 @@ export const FileUploadBlock = styled.div`
   display: inline-block;
   width: 100%;
   height: 54px;
-  margin-bottom: 0;
+  margin-bottom: 50px;
 `;
 
 export const FileUploadInput = styled.input`
@@ -85,41 +89,8 @@ export const FileUploadLabel = styled.label`
     border: 1px solid ${p => p.theme.colors.borderColor};
     border-radius: ${p => p.theme.radii.sm} ${p => p.theme.radii.none}
       ${p => p.theme.radii.none} ${p => p.theme.radii.sm};
-    /* border-left: inherit; */
   }
 `;
-
-// export const FileLabel = styled(InputLabel)`
-//   border: 1px solid ${p => p.theme.colors.borderColor};
-//   display: inline-block;
-//   padding: 14px 15px;
-//   border-radius: ${p => p.theme.radii.sm} ${p => p.theme.radii.none}
-//     ${p => p.theme.radii.none} ${p => p.theme.radii.sm};
-//   font-size: ${p => p.theme.fontSizes.m};
-//   font-weight: 400;
-//   cursor: pointer;
-//   margin-bottom: 0;
-// `;
-
-// export const Test = styled.div`
-//   width: 328px;
-//   border: 1px solid tomato;
-// `;
-
-// export const FileLabelField = styled(InputLabel)`
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   width: calc(328px - 83px);
-//   border: 1px solid tomato;
-//   display: inline-block;
-//   padding: 14px 0 14px 16px;
-//   border-radius: ${p => p.theme.radii.sm};
-//   font-size: ${p => p.theme.fontSizes.m};
-//   font-weight: 400;
-//   cursor: pointer;
-//   margin-bottom: 0;
-// `;
 
 export const NumberExample = styled.p`
   position: absolute;
@@ -133,4 +104,16 @@ export const PositionsBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  font-weight: 400;
+  font-size: ${p => p.theme.fontSizes.m};
+`;
+
+export const PositionsTitle = styled.p`
+  margin-bottom: 11px;
+`;
+
+export const PositionsItem = styled.label`
+  :not(:last-of-type) {
+    margin-bottom: 7px;
+  }
 `;

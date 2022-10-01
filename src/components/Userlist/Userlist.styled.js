@@ -13,10 +13,16 @@ export const UserListGrid = styled.ul`
     grid-gap: 29px;
     grid-template-columns: repeat(3, 282px);
   }
+  @media screen and (min-width: 2560px) {
+    grid-gap: 29px;
+    grid-template-columns: repeat(3, 370px);
+  }
 `;
 
 export const UserListTitle = styled.h2`
-  max-width: 328px;
+  @media screen and (max-width: 767px) {
+    max-width: 328px;
+  }
   text-align: center;
   margin: ${p => p.theme.space[0]}px ${p => p.theme.space[9]} 50px
     ${p => p.theme.space[9]};

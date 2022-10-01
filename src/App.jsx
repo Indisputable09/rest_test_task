@@ -5,11 +5,8 @@ import Header from 'components/Header';
 import Hero from 'components/Hero';
 import Userlist from 'components/Userlist';
 import { fetchUsers, getUserById, PER_PAGE, postUser } from 'services/API';
-// import UserItem from 'components/UserItem';
-// import { ShowMoreButton } from 'components/Button/Button.styled';
 import Registration from 'components/Registration';
 import { UsersContext } from 'hooks/UsersContext';
-// import { UserListTitle } from 'components/Userlist/Userlist.styled';
 import { Box } from 'components/Box';
 import Container from 'components/Container';
 
@@ -147,14 +144,6 @@ export const App = () => {
                   status={status}
                   handlePageIncrement={handlePageIncrement}
                 />
-                {/* <UserListTitle>Working with GET request</UserListTitle>
-                  <UserItem fetchedUsers={fetchedUsers} />
-                  {status !== 'REJECTED' && ENOUGH_USERS && (
-                    <ShowMoreButton onClick={handlePageIncrement}>
-                      Show more
-                    </ShowMoreButton>
-                  )} */}
-                {/* </Userlist> */}
               </Container>
             </Box>
           )}

@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 import { Notify } from 'notiflix';
 import Positions from 'components/Positions';

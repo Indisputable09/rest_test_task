@@ -93,7 +93,7 @@ export const HeroTitle = styled.h1`
   max-width: 328px;
   margin: ${p => p.theme.space[0]}px ${p => p.theme.space[9]} 21px
     ${p => p.theme.space[9]};
-  color: ${p => p.theme.colors.white};
+  color: ${p => p.theme.colors.secondaryTextColor};
   font-size: ${p => p.theme.fontSizes.l};
   line-height: ${p => p.theme.lineHeights.heading};
   font-weight: 400;
@@ -107,7 +107,7 @@ export const HeroText = styled.p`
   max-width: 328px;
   margin: ${p => p.theme.space[0]}px ${p => p.theme.space[9]}
     ${p => p.theme.space[5]}px ${p => p.theme.space[9]};
-  color: ${p => p.theme.colors.white};
+  color: ${p => p.theme.colors.secondaryTextColor};
   font-size: ${p => p.theme.fontSizes.m};
   line-height: ${p => p.theme.lineHeights.body};
   font-weight: 400;

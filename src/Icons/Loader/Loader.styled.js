@@ -14,8 +14,3 @@ export const LoaderIcon = styled.svg`
   height: 24px;
   animation: ${spinAnim} 1.2s linear infinite;
 `;
-
-export const Preloader = styled(LoaderIcon)`
-  width: 60px;
-  height: 60px;
-`;

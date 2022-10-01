@@ -9,7 +9,9 @@ import UserItem from 'components/UserItem';
 import { ShowMoreButton } from 'components/Button/Button.styled';
 import Registration from 'components/Registration';
 import { UsersContext } from 'hooks/UsersContext';
-import Loader from 'Icons/Loader';
+import { UserListTitle } from 'components/Userlist/Userlist.styled';
+import { Box } from 'components/Box';
+import Container from 'components/Container';
 
 export const App = () => {
   const { idle, pending, resolved, rejected } = Status;
@@ -52,7 +54,6 @@ export const App = () => {
 
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);
-    console.log('Button clicked');
     setTimeout(() => {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
@@ -129,18 +130,19 @@ export const App = () => {
           getPosition,
         }}
       >
-        {status === 'PENDING' ? (
+        {/* {status === 'PENDING' ? (
           <Loader />
         ) : (
-          <>
-            <Header />
-            <Loader />
-            {/* <Preloader /> */}
-            <main>
-              <Hero />
-              {loggedIn && (
+          <> */}
+        <Header />
+        {/* <Loader /> */}
+        <main>
+          <Hero />
+          {loggedIn && (
+            <Box py="10">
+              <Container>
                 <Userlist>
-                  <h2>Working with GET request</h2>
+                  <UserListTitle>Working with GET request</UserListTitle>
                   <UserItem fetchedUsers={fetchedUsers} />
                   {status === 'RESOLVED' && ENOUGH_USERS && (
                     <ShowMoreButton onClick={handlePageIncrement}>
@@ -148,15 +150,17 @@ export const App = () => {
                     </ShowMoreButton>
                   )}
                 </Userlist>
-              )}
-              <Registration
-                onSubmit={handleSubmit}
-                handleFileChange={handleFileChange}
-                validateSelectedFile={validateSelectedFile}
-              />
-            </main>
-          </>
-        )}
+              </Container>
+            </Box>
+          )}
+          <Registration
+            onSubmit={handleSubmit}
+            handleFileChange={handleFileChange}
+            validateSelectedFile={validateSelectedFile}
+          />
+        </main>
+        {/* </> */}
+        {/* )} */}
       </UsersContext.Provider>
     </>
   );

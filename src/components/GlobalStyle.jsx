@@ -5,6 +5,10 @@ export const GlobalStyle = createGlobalStyle`
   body {
   margin: 0;
   font-family: 'Nunito', sans-serif;
+  color: ${p => p.theme.colors.primaryTextColor};
+  }
+  main {
+    background-color: ${p => p.theme.colors.mainBg};
   }
 ul {
   list-style: none;
@@ -19,6 +23,7 @@ h1, h2, h3, h4, h5, h6, p, ul {
 button {
 cursor: pointer;
 padding: 0;
+color: ${p => p.theme.colors.primaryTextColor};
 }
 a {
   text-decoration: none;

@@ -1,13 +1,16 @@
 export const theme = {
   colors: {
-    white: '#FFFFFF',
+    secondaryTextColor: '#FFFFFF',
+    cardBg: '#FFFFFF',
+    primaryTextColor: 'rgba(0, 0, 0, 0.87)',
+    mainBg: '#E5E5E5',
     primary: '#F4E041',
     secondary: '#00BDD3',
     background: '#F8F8F8',
     hover: '#FFE302',
     disabled: '#B4B4B4',
   },
-  space: [0, 2, 13, 16, 20, 32, 60, 128, 256, 'auto'],
+  space: [0, 2, 13, 16, 20, 32, 60, 128, 256, 'auto', 140],
   fontSizes: {
     m: '16px',
     l: '40px',
@@ -46,6 +49,7 @@ export const theme = {
     lg: '16px',
     exlg: '80px',
     round: '50%',
+    card: '10px',
   },
   position: {
     fixed: 'fixed',

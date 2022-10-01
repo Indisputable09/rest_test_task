@@ -1,11 +1,11 @@
 import sprite from '../../images/svg/sprite.svg';
-import { Preloader } from './Loader.styled';
+import { LoaderIcon } from './Loader.styled';
 
 const Loader = () => {
   return (
-    <Preloader>
+    <LoaderIcon>
       <use href={sprite + '#preloader'}></use>
-    </Preloader>
+    </LoaderIcon>
   );
 };
 export default Loader;

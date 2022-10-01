@@ -113,7 +113,8 @@ export const PositionsTitle = styled.p`
 `;
 
 export const PositionsItem = styled.label`
-  :not(:last-of-type) {
-    margin-bottom: 7px;
+  margin-bottom: 7px;
+  :last-of-type {
+    margin-bottom: 47px;
   }
 `;

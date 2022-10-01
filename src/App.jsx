@@ -79,28 +79,28 @@ export const App = () => {
     }
   };
 
-  const handleFileChange = e => {
-    if (e.target.files.length > 0) {
-      setFile(e.target.files[0]);
-    }
-    const reader = new FileReader();
+  // const handleFileChange = e => {
+  //   if (e.target.files.length > 0) {
+  //     setFile(e.target.files[0]);
+  //   }
+  //   const reader = new FileReader();
 
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = e => {
-      const image = new Image();
-      image.src = e.target.result;
-      image.onload = e => {
-        const height = e.target.height;
-        const width = e.target.width;
-        if (height > 70 || width > 70) {
-          alert('Height and Width must not exceed 70px.');
-          return false;
-        }
-        // alert('Uploaded image has valid Height and Width.');
-        return true;
-      };
-    };
-  };
+  //   reader.readAsDataURL(e.target.files[0]);
+  //   reader.onload = e => {
+  //     const image = new Image();
+  //     image.src = e.target.result;
+  //     image.onload = e => {
+  //       const height = e.target.height;
+  //       const width = e.target.width;
+  //       if (height > 70 || width > 70) {
+  //         alert('Height and Width must not exceed 70px.');
+  //         return false;
+  //       }
+  //       // alert('Uploaded image has valid Height and Width.');
+  //       return true;
+  //     };
+  //   };
+  // };
 
   const validateSelectedFile = () => {
     const MAX_FILE_SIZE = 5120;
@@ -115,6 +115,10 @@ export const App = () => {
 
   const getPosition = pos => {
     setPosition(pos);
+  };
+
+  const getFile = uploadedFile => {
+    setFile(uploadedFile);
   };
 
   const ENOUGH_USERS = fetchedUsers.length % PER_PAGE === 0;
@@ -147,11 +151,15 @@ export const App = () => {
               </Container>
             </Box>
           )}
-          <Registration
-            onSubmit={handleSubmit}
-            handleFileChange={handleFileChange}
-            validateSelectedFile={validateSelectedFile}
-          />
+          <Box pb="11" textAlign="center">
+            <Container>
+              <Registration
+                handleSubmit={handleSubmit}
+                getFile={getFile}
+                validateSelectedFile={validateSelectedFile}
+              />
+            </Container>
+          </Box>
         </main>
         {/* </> */}
         {/* )} */}

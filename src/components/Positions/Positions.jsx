@@ -33,7 +33,7 @@ const Positions = () => {
       <Field
         id={id}
         type="radio"
-        name={name}
+        name="position"
         value={name}
         checked={selectedPosition === name}
         onChange={handlePositionChange}

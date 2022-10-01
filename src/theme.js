@@ -3,6 +3,7 @@ export const theme = {
     secondaryTextColor: '#FFFFFF',
     cardBg: '#FFFFFF',
     primaryTextColor: 'rgba(0, 0, 0, 0.87)',
+    borderColor: 'rgba(0, 0, 0, 0.87)',
     mainBg: '#E5E5E5',
     primary: '#F4E041',
     secondary: '#00BDD3',
@@ -10,8 +11,9 @@ export const theme = {
     hover: '#FFE302',
     disabled: '#B4B4B4',
   },
-  space: [0, 2, 13, 16, 20, 32, 60, 128, 256, 'auto', 140],
+  space: [0, 2, 13, 16, 20, 32, 60, 128, 256, 'auto', 140, 100],
   fontSizes: {
+    sm: '12px',
     m: '16px',
     l: '40px',
   },

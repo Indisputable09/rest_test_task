@@ -6,6 +6,7 @@ export const GlobalStyle = createGlobalStyle`
   margin: 0;
   font-family: 'Nunito', sans-serif;
   color: ${p => p.theme.colors.primaryTextColor};
+  line-height: ${p => p.theme.lineHeights.body};
   }
   main {
     background-color: ${p => p.theme.colors.mainBg};

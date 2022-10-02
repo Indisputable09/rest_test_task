@@ -1,10 +1,14 @@
-import { PositionsItem } from 'components/Registration/Registration.styled';
-import { Field } from 'formik';
-import { useUsers } from 'hooks/UsersContext';
 import { useEffect, useState } from 'react';
+import {
+  CustomRadioButton,
+  LabelText,
+  PositionsItem,
+  RadioButton,
+} from './Positions.styled';
+import { useUsers } from 'hooks/UsersContext';
 import { fetchPositions } from 'services/API';
 
-const Positions = ({ handlePositionNumberChange, values }) => {
+const Positions = ({ handlePositionValueChange, values }) => {
   const { getPosition } = useUsers();
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState('');
@@ -27,12 +31,12 @@ const Positions = ({ handlePositionNumberChange, values }) => {
   const handlePositionChange = e => {
     setSelectedPosition(e.currentTarget.value);
     setSelectedPositionId(e.currentTarget.id);
-    handlePositionNumberChange(e.currentTarget.id);
+    handlePositionValueChange(e.currentTarget.value);
   };
 
   return positions.map(({ id, name }) => (
     <PositionsItem key={id}>
-      <Field
+      <RadioButton
         id={id}
         type="radio"
         name="position"
@@ -40,7 +44,8 @@ const Positions = ({ handlePositionNumberChange, values }) => {
         checked={selectedPosition === name}
         onChange={handlePositionChange}
       />
-      {name}
+      <CustomRadioButton></CustomRadioButton>
+      <LabelText>{name}</LabelText>
     </PositionsItem>
   ));
 };

@@ -12,9 +12,14 @@ export const ButtonStyled = styled(Button)`
   line-height: ${p => p.theme.lineHeights.body};
   font-weight: 400;
 
-  :hover,
-  :focus {
+  &:hover,
+  &:focus {
     background-color: ${p => p.theme.colors.hover};
+  }
+
+  &:disabled {
+    background-color: ${p => p.theme.colors.disabled};
+    color: ${p => p.theme.colors.disabledText};
   }
 `;
 

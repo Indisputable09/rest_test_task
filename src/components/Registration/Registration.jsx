@@ -18,6 +18,7 @@ import {
 import { SignUpButton } from 'components/Button/Button.styled';
 import { useState } from 'react';
 
+// console.log('~ isEmpty', isEmpty(['']));
 const NAME_MATCH = "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
 
 const nameError =
@@ -93,15 +94,18 @@ const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
     }));
   };
 
-  const handlePositionNumberChange = positionNumber => {
+  const handlePositionValueChange = positionNumber => {
     setValues(prev => ({
       ...prev,
-      position: positionNumber,
+      position: [positionNumber],
     }));
   };
 
   const inputValues = Object.values(values);
-  const emptyValues = inputValues.some(item => item.length === 0);
+  // const test = inputValues.some(item => item.includes(''));
+  const emptyValues = inputValues.some(
+    item => item.length === 0 || item.includes('')
+  );
 
   return (
     <>
@@ -159,7 +163,7 @@ const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
             <PositionsBlock>
               <PositionsTitle>Select your position</PositionsTitle>
               <Positions
-                handlePositionNumberChange={handlePositionNumberChange}
+                handlePositionValueChange={handlePositionValueChange}
                 values={values}
               />
             </PositionsBlock>

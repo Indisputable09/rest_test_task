@@ -15,8 +15,8 @@ export const FormInput = styled(Field)`
   width: 328px;
   height: 54px;
   border-radius: ${p => p.theme.radii.sm};
-  outline: none;
-  border: none;
+  outline: ${p => p.theme.borders.none};
+  border: ${p => p.theme.borders.none};
   padding: 14px 0 14px ${p => p.theme.space[3]}px;
 
   @media screen and (min-width: 768px) {
@@ -33,7 +33,7 @@ export const PositionsFileBlock = styled.div`
 `;
 
 export const InputLabel = styled.label`
-  position: relative;
+  position: ${p => p.theme.position.relative};
   margin-bottom: 50px;
   :nth-of-type(3) {
     margin-bottom: 43px;
@@ -41,7 +41,7 @@ export const InputLabel = styled.label`
 `;
 
 export const FileUploadBlock = styled.div`
-  position: relative;
+  position: ${p => p.theme.position.relative};
   display: inline-block;
   width: 100%;
   height: 54px;
@@ -49,16 +49,17 @@ export const FileUploadBlock = styled.div`
 `;
 
 export const FileUploadInput = styled.input`
-  position: relative;
+  position: ${p => p.theme.position.relative};
   z-index: 2;
   width: 100%;
   height: 54px;
   margin: 0;
   opacity: 0;
+  cursor: pointer;
 `;
 
 export const FileUploadLabel = styled.label`
-  position: absolute;
+  position: ${p => p.theme.position.absolute};
   display: flex;
   align-items: center;
   padding-left: 99px;
@@ -74,7 +75,7 @@ export const FileUploadLabel = styled.label`
   border-radius: 4px;
 
   ::after {
-    position: absolute;
+    position: ${p => p.theme.position.absolute};
     box-sizing: border-box;
     top: -1px;
     left: 0;
@@ -89,11 +90,12 @@ export const FileUploadLabel = styled.label`
     border: 1px solid ${p => p.theme.colors.borderColor};
     border-radius: ${p => p.theme.radii.sm} ${p => p.theme.radii.none}
       ${p => p.theme.radii.none} ${p => p.theme.radii.sm};
+    cursor: pointer;
   }
 `;
 
 export const NumberExample = styled.p`
-  position: absolute;
+  position: ${p => p.theme.position.absolute};
   top: 58px;
   left: 16px;
   font-weight: 400;
@@ -110,11 +112,4 @@ export const PositionsBlock = styled.div`
 
 export const PositionsTitle = styled.p`
   margin-bottom: 11px;
-`;
-
-export const PositionsItem = styled.label`
-  margin-bottom: 7px;
-  :last-of-type {
-    margin-bottom: 47px;
-  }
 `;

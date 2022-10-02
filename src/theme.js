@@ -10,6 +10,9 @@ export const theme = {
     background: '#F8F8F8',
     hover: '#FFE302',
     disabled: '#B4B4B4',
+    disabledText: 'rgba(255, 255, 255, 0.87)',
+    radioButtonIdleColor: 'rgba(208, 207, 207, 1)',
+    radioButtonColor: 'rgba(0, 189, 211, 1)',
   },
   space: [0, 2, 13, 16, 20, 32, 60, 128, 256, 'auto', 140, 100],
   fontSizes: {

@@ -118,7 +118,7 @@ export const App = () => {
         <main>
           <Hero />
           {loggedIn && (
-            <Box py="10" textAlign="center">
+            <Box pt="10" textAlign="center">
               <Container>
                 <Userlist
                   enoughUsers={ENOUGH_USERS}
@@ -128,7 +128,7 @@ export const App = () => {
               </Container>
             </Box>
           )}
-          <Box pb="11" textAlign="center">
+          <Box pt="10" pb="11" textAlign="center">
             <Container>
               <Registration
                 handleSubmit={handleSubmit}

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Status } from 'constants/constants';
+import { Status, USER_ID_LS } from 'constants/constants';
 import { GlobalStyle } from 'components/GlobalStyle';
 import Header from 'components/Header';
 import Hero from 'components/Hero';
 import Userlist from 'components/Userlist';
-import { fetchUsers, getUserById, PER_PAGE, postUser } from 'services/API';
+import { fetchUsers, getUserById, PER_PAGE } from 'services/API';
 import Registration from 'components/Registration';
 import { UsersContext } from 'hooks/UsersContext';
 import { Box } from 'components/Box';
@@ -12,12 +12,9 @@ import Container from 'components/Container';
 
 export const App = () => {
   const { idle, pending, resolved, rejected } = Status;
-  const USER_ID_LS = 'User_ID';
   const [fetchedUsers, setfetchedUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState(idle);
-  const [position, setPosition] = useState(null);
-  const [file, setFile] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -59,43 +56,8 @@ export const App = () => {
     }, 700);
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const phone = e.target.phone.value;
-    const values = {
-      name,
-      email,
-      phone,
-      position_id: position,
-      photo: file,
-    };
-    const postResponse = await postUser(values);
-    console.log('~ postResponse', postResponse);
-    if (postResponse.success) {
-      setLoggedIn(true);
-      localStorage.setItem(USER_ID_LS, postResponse.user_id);
-    }
-  };
-
-  const validateSelectedFile = () => {
-    const MAX_FILE_SIZE = 5120;
-
-    const fileSizeKiloBytes = file.size / 1024;
-
-    if (fileSizeKiloBytes > MAX_FILE_SIZE) {
-      alert('File size is greater than maximum limit');
-      return;
-    }
-  };
-
-  const getPosition = pos => {
-    setPosition(pos);
-  };
-
-  const getFile = uploadedFile => {
-    setFile(uploadedFile);
+  const setUserLoggedIn = () => {
+    setLoggedIn(true);
   };
 
   const ENOUGH_USERS = fetchedUsers.length % PER_PAGE === 0;
@@ -105,7 +67,6 @@ export const App = () => {
       <UsersContext.Provider
         value={{
           userName: user,
-          getPosition,
           fetchedUsers,
         }}
       >
@@ -130,11 +91,7 @@ export const App = () => {
           )}
           <Box pt="10" pb="11" textAlign="center">
             <Container>
-              <Registration
-                handleSubmit={handleSubmit}
-                getFile={getFile}
-                validateSelectedFile={validateSelectedFile}
-              />
+              <Registration setUserLoggedIn={setUserLoggedIn} />
             </Container>
           </Box>
         </main>

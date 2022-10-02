@@ -17,8 +17,9 @@ import {
 } from './Registration.styled';
 import { SignUpButton } from 'components/Button/Button.styled';
 import { useState } from 'react';
+import { USER_ID_LS } from 'constants/constants';
+import { postUser } from 'services/API';
 
-// console.log('~ isEmpty', isEmpty(['']));
 const NAME_MATCH = "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
 
 const nameError =
@@ -50,22 +51,22 @@ const FormError = ({ name }) => {
   );
 };
 
-const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
+const Registration = ({ setUserLoggedIn }) => {
   const [file, setFile] = useState('');
   const [values, setValues] = useState({
     name: '',
     email: '',
     phone: '',
     position: '',
-    file: [],
+    file: null,
   });
+
   const handleFileChange = e => {
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
-      getFile(e.target.files[0]);
       setValues(prev => ({
         ...prev,
-        [e.target.name]: [e.target.files[0]],
+        [e.target.name]: e.target.files[0],
       }));
     }
     const reader = new FileReader();
@@ -81,31 +82,48 @@ const Registration = ({ handleSubmit, validateSelectedFile, getFile }) => {
           alert('Height and Width must not exceed 70px.');
           return false;
         }
-        // alert('Uploaded image has valid Height and Width.');
         return true;
       };
     };
   };
 
+  const validateSelectedFile = () => {
+    const MAX_FILE_SIZE = 5120;
+
+    const fileSizeKiloBytes = file.size / 1024;
+
+    if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+      alert('File size is greater than maximum limit');
+      return;
+    }
+  };
+
   const handleValuesChange = e => {
     setValues(prev => ({
       ...prev,
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     }));
   };
 
   const handlePositionValueChange = positionNumber => {
     setValues(prev => ({
       ...prev,
-      position: [positionNumber],
+      position: +positionNumber,
     }));
   };
 
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const postResponse = await postUser(values);
+    console.log('~ postResponse', postResponse);
+    if (postResponse.success) {
+      setUserLoggedIn();
+      localStorage.setItem(USER_ID_LS, postResponse.user_id);
+    }
+  };
+
   const inputValues = Object.values(values);
-  // const test = inputValues.some(item => item.includes(''));
-  const emptyValues = inputValues.some(
-    item => item.length === 0 || item.includes('')
-  );
+  const emptyValues = inputValues.some(item => item === '' || !item);
 
   return (
     <>

@@ -9,7 +9,7 @@ import { useUsers } from 'hooks/UsersContext';
 import { fetchPositions } from 'services/API';
 
 const Positions = ({ handlePositionValueChange, values }) => {
-  const { getPosition } = useUsers();
+  // const { getPosition } = useUsers();
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState('');
   const [selectedPositionId, setSelectedPositionId] = useState('');
@@ -24,14 +24,14 @@ const Positions = ({ handlePositionValueChange, values }) => {
     })();
   }, []);
 
-  useEffect(() => {
-    getPosition(+selectedPositionId);
-  }, [getPosition, selectedPositionId]);
+  // useEffect(() => {
+  //   getPosition(+selectedPositionId);
+  // }, [getPosition, selectedPositionId]);
 
   const handlePositionChange = e => {
     setSelectedPosition(e.currentTarget.value);
     setSelectedPositionId(e.currentTarget.id);
-    handlePositionValueChange(e.currentTarget.value);
+    handlePositionValueChange(e.currentTarget.id);
   };
 
   return positions.map(({ id, name }) => (

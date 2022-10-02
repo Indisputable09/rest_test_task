@@ -59,8 +59,8 @@ export async function postUser(credentials = {}) {
     formData.append('name', credentials.name);
     formData.append('email', credentials.email);
     formData.append('phone', credentials.phone);
-    formData.append('position_id', credentials.position_id);
-    formData.append('photo', credentials.photo);
+    formData.append('position_id', credentials.position);
+    formData.append('photo', credentials.file);
 
     const response = await axios.post('users', formData, {
       headers: {

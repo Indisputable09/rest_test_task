@@ -9,6 +9,7 @@ import Registration from 'components/Registration';
 import { UsersContext } from 'hooks/UsersContext';
 import { Box } from 'components/Box';
 import Container from 'components/Container';
+import SuccessImage from 'Icons/SuccessImage';
 
 export const App = () => {
   const { idle, pending, resolved, rejected } = Status;
@@ -91,7 +92,11 @@ export const App = () => {
           )}
           <Box pt="10" pb="11" textAlign="center">
             <Container>
-              <Registration setUserLoggedIn={setUserLoggedIn} />
+              {loggedIn ? (
+                <SuccessImage />
+              ) : (
+                <Registration setUserLoggedIn={setUserLoggedIn} />
+              )}
             </Container>
           </Box>
         </main>

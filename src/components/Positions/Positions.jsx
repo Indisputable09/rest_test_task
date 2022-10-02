@@ -5,14 +5,13 @@ import {
   PositionsItem,
   RadioButton,
 } from './Positions.styled';
-import { useUsers } from 'hooks/UsersContext';
 import { fetchPositions } from 'services/API';
 
 const Positions = ({ handlePositionValueChange, values }) => {
   // const { getPosition } = useUsers();
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState('');
-  const [selectedPositionId, setSelectedPositionId] = useState('');
+  // const [selectedPositionId, setSelectedPositionId] = useState('');
   useEffect(() => {
     (async function asyncFetchPositions() {
       try {
@@ -30,7 +29,7 @@ const Positions = ({ handlePositionValueChange, values }) => {
 
   const handlePositionChange = e => {
     setSelectedPosition(e.currentTarget.value);
-    setSelectedPositionId(e.currentTarget.id);
+    // setSelectedPositionId(e.currentTarget.id);
     handlePositionValueChange(e.currentTarget.id);
   };
 

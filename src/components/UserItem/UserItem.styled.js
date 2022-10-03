@@ -2,9 +2,6 @@ import styled from 'styled-components';
 
 export const UserListItem = styled.li`
   text-align: center;
-  /* :not(:last-of-type) {
-    margin-bottom: ${p => p.theme.space[4]}px;
-  } */
 `;
 
 export const UserCard = styled.div`

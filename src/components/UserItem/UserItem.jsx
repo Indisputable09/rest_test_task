@@ -1,4 +1,5 @@
 import { useUsers } from 'hooks/UsersContext';
+import sprite from '../../images/svg/sprite.svg';
 import {
   UserListItem,
   UserCard,
@@ -12,7 +13,13 @@ const UserItem = () => {
   return fetchedUsers.map(({ id, name, photo, position, email, phone }) => (
     <UserListItem key={id}>
       <UserCard>
-        <UserItemImg src={photo} alt={name} />
+        {photo.includes('users') ? (
+          <UserItemImg src={photo} alt={name} />
+        ) : (
+          <svg width="70" height="70">
+            <use href={sprite + '#user-plug'}></use>
+          </svg>
+        )}
         <UserItemName>{name}</UserItemName>
         <UserItemAddInfo>
           {position} <br />

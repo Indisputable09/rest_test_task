@@ -19,8 +19,16 @@ export const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
+  const userId = localStorage.getItem(USER_ID_LS);
   useEffect(() => {
-    const userId = localStorage.getItem(USER_ID_LS);
+    async function fetchCurrentUserData() {
+      const { name } = await getUserById(userId);
+      setUser(name);
+    }
+    fetchCurrentUserData();
+  }, [userId]);
+
+  useEffect(() => {
     if (userId) {
       setLoggedIn(true);
     }
@@ -29,8 +37,6 @@ export const App = () => {
         try {
           setStatus(pending);
           const { users } = await fetchUsers(page);
-          const { name } = await getUserById(userId);
-          setUser(name);
           if (!users ?? users.length === 0) {
             setStatus(idle);
             return;
@@ -45,16 +51,16 @@ export const App = () => {
         }
       })();
     }
-  }, [idle, loggedIn, page, pending, rejected, resolved]);
+  }, [idle, loggedIn, page, pending, rejected, resolved, userId]);
 
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);
-    setTimeout(() => {
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: 'smooth',
-      });
-    }, 700);
+    // setTimeout(() => {
+    //   window.scrollTo({
+    //     top: document.documentElement.scrollHeight,
+    //     behavior: 'smooth',
+    //   });
+    // }, 700);
   };
 
   const setUserLoggedIn = () => {

@@ -31,6 +31,7 @@ export const CustomRadioButton = styled.span`
   width: 20px;
   border: 1px solid ${p => p.theme.colors.radioButtonIdleColor};
   border-radius: ${p => p.theme.radii.round};
+  transition: ${p => p.theme.transition.backgroundColor};
 
   ::after {
     content: '';

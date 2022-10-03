@@ -23,8 +23,8 @@ const UserItem = () => {
         <UserItemName>{name}</UserItemName>
         <UserItemAddInfo>
           {position} <br />
-          {email} <br />
-          {phone}
+          <a href={`mailto:${email}`}>{email}</a> <br />
+          <a href={`tel:${phone}`}>{phone}</a>
         </UserItemAddInfo>
       </UserCard>
     </UserListItem>

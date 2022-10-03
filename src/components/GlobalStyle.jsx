@@ -28,5 +28,6 @@ color: ${p => p.theme.colors.primaryTextColor};
 }
 a {
   text-decoration: none;
+  color: ${p => p.theme.colors.primaryTextColor};
 }
 `;

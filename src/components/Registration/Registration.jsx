@@ -53,6 +53,7 @@ const FormError = ({ name }) => {
 
 const Registration = ({ setUserLoggedIn }) => {
   const [file, setFile] = useState('');
+  const [notUploadImage, setNotUploadImage] = useState(true);
   const [values, setValues] = useState({
     name: '',
     email: '',
@@ -61,6 +62,41 @@ const Registration = ({ setUserLoggedIn }) => {
     file: null,
   });
 
+  const validateFileSize = imageFile => {
+    const MAX_FILE_SIZE = 5120;
+
+    const fileSizeKiloBytes = imageFile.size / 1024;
+
+    if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+      alert('File size is greater than maximum limit');
+      setNotUploadImage(true);
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(imageFile);
+    reader.onload = e => {
+      const image = new Image();
+      image.src = e.target.result;
+      image.onload = e => {
+        const height = e.target.height;
+        const width = e.target.width;
+        if (
+          (height >= 70 || width >= 70) &&
+          fileSizeKiloBytes <= MAX_FILE_SIZE
+        ) {
+          setNotUploadImage(false);
+          return true;
+        } else if (height < 70 || width < 70) {
+          alert('Height and Width must not be less than 70px.');
+          setNotUploadImage(true);
+          return false;
+        }
+      };
+    };
+  };
+
   const handleFileChange = e => {
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
@@ -68,35 +104,20 @@ const Registration = ({ setUserLoggedIn }) => {
         ...prev,
         [e.target.name]: e.target.files[0],
       }));
-    }
-    const reader = new FileReader();
-
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = e => {
-      const image = new Image();
-      image.src = e.target.result;
-      image.onload = e => {
-        const height = e.target.height;
-        const width = e.target.width;
-        if (height > 70 || width > 70) {
-          alert('Height and Width must not exceed 70px.');
-          return false;
-        }
-        return true;
-      };
-    };
-  };
-
-  const validateSelectedFile = () => {
-    const MAX_FILE_SIZE = 5120;
-
-    const fileSizeKiloBytes = file.size / 1024;
-
-    if (fileSizeKiloBytes > MAX_FILE_SIZE) {
-      alert('File size is greater than maximum limit');
-      return;
+      validateFileSize(e.target.files[0]);
     }
   };
+
+  // const validateSelectedFile = () => {
+  //   const MAX_FILE_SIZE = 5120;
+
+  //   const fileSizeKiloBytes = file.size / 1024;
+
+  //   if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+  //     alert('File size is greater than maximum limit');
+  //     return;
+  //   }
+  // };
 
   const handleValuesChange = e => {
     setValues(prev => ({
@@ -200,11 +221,7 @@ const Registration = ({ setUserLoggedIn }) => {
             </FileUploadBlock>
           </PositionsFileBlock>
           <FormError name="file" />
-          <SignUpButton
-            disabled={emptyValues}
-            type="submit"
-            onClick={validateSelectedFile}
-          >
+          <SignUpButton disabled={emptyValues || notUploadImage} type="submit">
             Sign up
           </SignUpButton>
         </FormStyled>

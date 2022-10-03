@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rest_test_task/static/css/main.d3fcf97e.css",
-    "main.js": "/rest_test_task/static/js/main.5f22ea9e.js",
+    "main.js": "/rest_test_task/static/js/main.1d4c53a0.js",
     "static/media/largeDesktop-hero_bg@2x.jpg": "/rest_test_task/static/media/largeDesktop-hero_bg@2x.439113e629085e405b61.jpg",
     "static/media/desktop-hero_bg@2x.jpg": "/rest_test_task/static/media/desktop-hero_bg@2x.2febd21fb16019a5d939.jpg",
     "static/media/tablet-hero_bg@2x.jpg": "/rest_test_task/static/media/tablet-hero_bg@2x.3d3646c2ecc1025cb3ed.jpg",
@@ -10,13 +10,13 @@
     "static/media/desktop-hero_bg.jpg": "/rest_test_task/static/media/desktop-hero_bg.d8197645c252d8a105a7.jpg",
     "static/media/tablet-hero_bg.jpg": "/rest_test_task/static/media/tablet-hero_bg.df005d194f764bb5cca4.jpg",
     "static/media/mobile-hero_bg.jpg": "/rest_test_task/static/media/mobile-hero_bg.16d99acb29bd3ab6b306.jpg",
-    "static/media/sprite.svg": "/rest_test_task/static/media/sprite.25bbf3cbacd672d3e7946ecb187a0339.svg",
+    "static/media/sprite.svg": "/rest_test_task/static/media/sprite.03eaa388fe8582d3a971eeab85c823ad.svg",
     "index.html": "/rest_test_task/index.html",
     "main.d3fcf97e.css.map": "/rest_test_task/static/css/main.d3fcf97e.css.map",
-    "main.5f22ea9e.js.map": "/rest_test_task/static/js/main.5f22ea9e.js.map"
+    "main.1d4c53a0.js.map": "/rest_test_task/static/js/main.1d4c53a0.js.map"
   },
   "entrypoints": [
     "static/css/main.d3fcf97e.css",
-    "static/js/main.5f22ea9e.js"
+    "static/js/main.1d4c53a0.js"
   ]
 }

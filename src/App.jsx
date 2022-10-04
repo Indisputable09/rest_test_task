@@ -10,6 +10,8 @@ import { UsersContext } from 'hooks/UsersContext';
 import { Box } from 'components/Box';
 import Container from 'components/Container';
 import SuccessImage from 'Icons/SuccessImage';
+import Preloader from 'Icons/Preloader';
+import { CenteredLoader } from 'Icons/Loader/Loader.styled';
 
 export const App = () => {
   const { idle, pending, resolved, rejected } = Status;
@@ -79,37 +81,38 @@ export const App = () => {
           fetchedUsers,
         }}
       >
-        {/* {status === 'PENDING' ? (
-          <Loader />
+        {status === 'PENDING' ? (
+          <CenteredLoader>
+            <Preloader />
+          </CenteredLoader>
         ) : (
-          <> */}
-        <Header />
-        {/* <Loader /> */}
-        <main>
-          <Hero />
-          {loggedIn && (
-            <Box pt="10" textAlign="center">
-              <Container>
-                <Userlist
-                  enoughUsers={ENOUGH_USERS}
-                  status={status}
-                  handlePageIncrement={handlePageIncrement}
-                />
-              </Container>
-            </Box>
-          )}
-          <Box pt="10" pb="11" textAlign="center">
-            <Container>
-              {loggedIn ? (
-                <SuccessImage />
-              ) : (
-                <Registration setUserLoggedIn={setUserLoggedIn} />
+          <>
+            <Header />
+            <main>
+              <Hero />
+              {loggedIn && (
+                <Box pt="10" textAlign="center">
+                  <Container>
+                    <Userlist
+                      enoughUsers={ENOUGH_USERS}
+                      status={status}
+                      handlePageIncrement={handlePageIncrement}
+                    />
+                  </Container>
+                </Box>
               )}
-            </Container>
-          </Box>
-        </main>
-        {/* </> */}
-        {/* )} */}
+              <Box pt="10" pb="11" textAlign="center">
+                <Container>
+                  {loggedIn ? (
+                    <SuccessImage />
+                  ) : (
+                    <Registration setUserLoggedIn={setUserLoggedIn} />
+                  )}
+                </Container>
+              </Box>
+            </main>
+          </>
+        )}
       </UsersContext.Provider>
     </>
   );

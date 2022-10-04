@@ -14,3 +14,15 @@ export const LoaderIcon = styled.svg`
   height: 24px;
   animation: ${spinAnim} 1.2s linear infinite;
 `;
+
+export const CenteredLoader = styled.div`
+  position: ${p => p.theme.position.fixed};
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+export const PreloaderIcon = styled(LoaderIcon)`
+  width: 55px;
+  height: 55px;
+`;

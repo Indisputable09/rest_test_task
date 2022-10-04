@@ -14,7 +14,7 @@ export const theme = {
     radioButtonIdleColor: 'rgba(208, 207, 207, 1)',
     radioButtonColor: 'rgba(0, 189, 211, 1)',
   },
-  space: [0, 2, 13, 16, 20, 32, 60, 128, 256, 'auto', 140, 100],
+  space: [0, 3, 13, 16, 20, 32, 60, 128, 256, 'auto', 140, 100],
   fontSizes: {
     sm: '12px',
     m: '16px',

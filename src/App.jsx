@@ -25,8 +25,10 @@ export const App = () => {
       const { name } = await getUserById(userId);
       setUser(name);
     }
-    fetchCurrentUserData();
-  }, [userId]);
+    if (loggedIn) {
+      fetchCurrentUserData();
+    }
+  }, [loggedIn, userId]);
 
   useEffect(() => {
     if (userId) {

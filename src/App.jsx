@@ -24,9 +24,14 @@ export const App = () => {
 
   const userId = localStorage.getItem(USER_ID_LS);
 
-  useEffect(() => {
-    setShowPreloader(false);
-  }, []);
+  // useEffect(() => {
+  //   const timeOutId = setTimeout(() => {
+  //     setShowPreloader(false);
+  //   }, 500);
+  //   return () => {
+  //     clearTimeout(timeOutId);
+  //   };
+  // }, []);
 
   useEffect(() => {
     async function fetchCurrentUserData() {
@@ -36,6 +41,12 @@ export const App = () => {
     if (loggedIn) {
       fetchCurrentUserData();
     }
+    const timeOutId = setTimeout(() => {
+      setShowPreloader(false);
+    }, 500);
+    return () => {
+      clearTimeout(timeOutId);
+    };
   }, [loggedIn, userId]);
 
   useEffect(() => {

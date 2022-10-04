@@ -24,15 +24,6 @@ export const App = () => {
 
   const userId = localStorage.getItem(USER_ID_LS);
 
-  // useEffect(() => {
-  //   const timeOutId = setTimeout(() => {
-  //     setShowPreloader(false);
-  //   }, 500);
-  //   return () => {
-  //     clearTimeout(timeOutId);
-  //   };
-  // }, []);
-
   useEffect(() => {
     async function fetchCurrentUserData() {
       const { name } = await getUserById(userId);

@@ -2,6 +2,7 @@ import ButtonsBlock from 'components/ButtonsBlock';
 import { Box } from 'components/Box';
 import { HeaderContainer } from 'components/Container/Container.styled';
 import Logo from 'Icons/Logo';
+// import { LogoStyled } from './Header.styled';
 
 const Header = () => {
   return (

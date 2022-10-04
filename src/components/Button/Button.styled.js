@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import Button from './Button';
 
 export const ButtonStyled = styled(Button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: ${p => p.theme.radii.exlg};
   border: ${p => p.theme.borders.none};
   background-color: ${p => p.theme.colors.primary};
@@ -25,6 +28,8 @@ export const ButtonStyled = styled(Button)`
 
 export const SignUpButton = styled(ButtonStyled)`
   padding: 4px 22px;
+  margin-left: ${p => p.theme.space[9]};
+  margin-right: ${p => p.theme.space[9]};
 `;
 
 export const UsersButton = styled(ButtonStyled)`
@@ -33,5 +38,6 @@ export const UsersButton = styled(ButtonStyled)`
 
 export const ShowMoreButton = styled(ButtonStyled)`
   padding: 4px 18px 4px 19px;
-  margin-top: 50px;
+  margin: 50px ${p => p.theme.space[9]} ${p => p.theme.space[0]}px
+    ${p => p.theme.space[9]};
 `;

@@ -15,6 +15,7 @@ import { CenteredLoader } from 'Icons/Loader/Loader.styled';
 
 export const App = () => {
   const { idle, pending, resolved, rejected } = Status;
+  const [showPreloader, setShowPreloader] = useState(true);
   const [fetchedUsers, setfetchedUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState(idle);
@@ -22,6 +23,11 @@ export const App = () => {
   const [user, setUser] = useState(null);
 
   const userId = localStorage.getItem(USER_ID_LS);
+
+  useEffect(() => {
+    setShowPreloader(false);
+  }, []);
+
   useEffect(() => {
     async function fetchCurrentUserData() {
       const { name } = await getUserById(userId);
@@ -81,7 +87,7 @@ export const App = () => {
           fetchedUsers,
         }}
       >
-        {status === 'PENDING' ? (
+        {showPreloader ? (
           <CenteredLoader>
             <Preloader />
           </CenteredLoader>

@@ -19,6 +19,7 @@ import { SignUpButton } from 'components/Button/Button.styled';
 import { useState } from 'react';
 import { USER_ID_LS } from 'constants/constants';
 import { postUser } from 'services/API';
+import Loader from 'Icons/Loader';
 
 const NAME_MATCH = "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
 
@@ -52,6 +53,7 @@ const FormError = ({ name }) => {
 };
 
 const Registration = ({ setUserLoggedIn }) => {
+  const [postingUser, setPostingUser] = useState(false);
   const [file, setFile] = useState('');
   const [notUploadImage, setNotUploadImage] = useState(true);
   const [values, setValues] = useState({
@@ -108,17 +110,6 @@ const Registration = ({ setUserLoggedIn }) => {
     }
   };
 
-  // const validateSelectedFile = () => {
-  //   const MAX_FILE_SIZE = 5120;
-
-  //   const fileSizeKiloBytes = file.size / 1024;
-
-  //   if (fileSizeKiloBytes > MAX_FILE_SIZE) {
-  //     alert('File size is greater than maximum limit');
-  //     return;
-  //   }
-  // };
-
   const handleValuesChange = e => {
     setValues(prev => ({
       ...prev,
@@ -134,12 +125,18 @@ const Registration = ({ setUserLoggedIn }) => {
   };
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    const postResponse = await postUser(values);
-    console.log('~ postResponse', postResponse);
-    if (postResponse.success) {
-      setUserLoggedIn();
-      localStorage.setItem(USER_ID_LS, postResponse.user_id);
+    try {
+      e.preventDefault();
+      setPostingUser(true);
+      const postResponse = await postUser(values);
+      console.log('~ postResponse', postResponse);
+      if (postResponse.success) {
+        setUserLoggedIn();
+        localStorage.setItem(USER_ID_LS, postResponse.user_id);
+      }
+      setPostingUser(false);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -222,7 +219,7 @@ const Registration = ({ setUserLoggedIn }) => {
           </PositionsFileBlock>
           <FormError name="file" />
           <SignUpButton disabled={emptyValues || notUploadImage} type="submit">
-            Sign up
+            {postingUser ? <Loader /> : 'Sign up'}
           </SignUpButton>
         </FormStyled>
       </Formik>

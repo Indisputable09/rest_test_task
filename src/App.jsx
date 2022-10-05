@@ -4,7 +4,7 @@ import { GlobalStyle } from 'components/GlobalStyle';
 import Header from 'components/Header';
 import Hero from 'components/Hero';
 import Userlist from 'components/Userlist';
-import { fetchUsers, getUserById, PER_PAGE } from 'services/API';
+import { fetchUsers, getToken, getUserById, PER_PAGE } from 'services/API';
 import Registration from 'components/Registration';
 import { UsersContext } from 'hooks/UsersContext';
 import { Box } from 'components/Box';
@@ -29,13 +29,17 @@ export const App = () => {
   const userId = localStorage.getItem(USER_ID_LS);
 
   useEffect(() => {
+    getToken();
     async function fetchCurrentUserData() {
-      const { name } = await getUserById(userId);
-      setUser(name);
+      const userResponse = await getUserById(userId);
+      if (!userResponse) {
+        setUser(null);
+        setLoggedIn(false);
+        return;
+      }
+      setUser(userResponse.name);
     }
-    if (loggedIn) {
-      fetchCurrentUserData();
-    }
+    fetchCurrentUserData();
     const timeOutId = setTimeout(() => {
       setShowPreloader(false);
     }, 500);
@@ -45,7 +49,7 @@ export const App = () => {
   }, [loggedIn, userId]);
 
   useEffect(() => {
-    if (userId) {
+    if (user) {
       setLoggedIn(true);
     }
     if (loggedIn) {
@@ -67,7 +71,7 @@ export const App = () => {
         }
       })();
     }
-  }, [idle, loggedIn, page, pending, rejected, resolved, userId]);
+  }, [idle, loggedIn, page, pending, rejected, resolved, user]);
 
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);

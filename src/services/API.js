@@ -2,6 +2,7 @@ import axios from 'axios';
 
 axios.defaults.baseURL =
   'https://frontend-test-assignment-api.abz.agency/api/v1/';
+axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 
 export const PER_PAGE = 6;
 
@@ -30,8 +31,8 @@ export async function fetchPositions() {
 
 export async function getToken() {
   try {
-    const token = await axios.get('token');
-    return token.data.token;
+    const authToken = await axios.get('token');
+    axios.defaults.headers.common['Token'] = authToken.data.token;
   } catch (error) {
     console.log(error);
   }
@@ -39,12 +40,7 @@ export async function getToken() {
 
 export async function getUserById(id) {
   try {
-    const token = await getToken();
-    const user = await axios.get(`users/${id}`, {
-      headers: {
-        Token: token,
-      },
-    });
+    const user = await axios.get(`users/${id}`);
     console.log('User ', user);
     return user.data.user;
   } catch (error) {
@@ -54,7 +50,6 @@ export async function getUserById(id) {
 
 export async function postUser(credentials = {}) {
   try {
-    const token = await getToken();
     const formData = new FormData();
     formData.append('name', credentials.name);
     formData.append('email', credentials.email);
@@ -62,12 +57,7 @@ export async function postUser(credentials = {}) {
     formData.append('position_id', credentials.position);
     formData.append('photo', credentials.file);
 
-    const response = await axios.post('users', formData, {
-      headers: {
-        Token: token,
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await axios.post('users', formData);
     return response.data;
   } catch (error) {
     console.log(error);

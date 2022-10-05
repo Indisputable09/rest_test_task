@@ -35,6 +35,7 @@ export const FormError = ({ name }) => {
 const Registration = ({ setUserLoggedIn }) => {
   const [file, setFile] = useState('');
   const [notUploadImage, setNotUploadImage] = useState(true);
+  const [fileUploadErrorText, setFileUploadErrorText] = useState('');
   const { signUpRef } = useUsers();
 
   const validateFileSize = imageFile => {
@@ -43,7 +44,7 @@ const Registration = ({ setUserLoggedIn }) => {
     const fileSizeKiloBytes = imageFile.size / 1024;
 
     if (fileSizeKiloBytes > MAX_FILE_SIZE) {
-      alert('File size is greater than maximum limit');
+      setFileUploadErrorText('File size is must not exceed 5Mb');
       setNotUploadImage(true);
       return;
     }
@@ -61,10 +62,11 @@ const Registration = ({ setUserLoggedIn }) => {
           (height >= 70 || width >= 70) &&
           fileSizeKiloBytes <= MAX_FILE_SIZE
         ) {
+          setFileUploadErrorText('');
           setNotUploadImage(false);
           return true;
         } else if (height < 70 || width < 70) {
-          alert('Height and Width must not be less than 70px.');
+          setFileUploadErrorText('Height and Width must not be less than 70px');
           setNotUploadImage(true);
           return false;
         }
@@ -114,8 +116,6 @@ const Registration = ({ setUserLoggedIn }) => {
         }}
       >
         {({ handleChange, isSubmitting, values, errors, touched }) => {
-          // console.log('~ touched', touched);
-          // console.log('~ errors', errors);
           const inputValues = Object.values(values);
           const emptyValues = inputValues.some(item => item === '' || !item);
           return (
@@ -165,8 +165,6 @@ const Registration = ({ setUserLoggedIn }) => {
                 ) : (
                   <NumberExample>+38 (XXX) XXX - XX - XX</NumberExample>
                 )}
-                {/* <NumberExample>+38 (XXX) XXX - XX - XX</NumberExample>
-                <FormError name="phone" /> */}
               </InputBlock>
               <PositionsFileBlock>
                 <PositionsBlock>
@@ -185,14 +183,18 @@ const Registration = ({ setUserLoggedIn }) => {
                     value={values.file}
                     accept="image/jpeg"
                     required
-                    // error={errors.file && touched.file ? 'true' : 'false'}
                   />
-                  <FileUploadLabel htmlFor="file">
+                  <FileUploadLabel
+                    htmlFor="file"
+                    notFit={fileUploadErrorText === '' ? false : true}
+                  >
                     {file ? file.name : 'Upload your photo'}
                   </FileUploadLabel>
+                  {fileUploadErrorText === '' ? null : (
+                    <ErrorText>{fileUploadErrorText}</ErrorText>
+                  )}
                 </FileUploadBlock>
               </PositionsFileBlock>
-              <FormError name="file" />
               <SignUpButton
                 disabled={emptyValues || notUploadImage}
                 type="submit"

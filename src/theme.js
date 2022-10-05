@@ -47,7 +47,7 @@ export const theme = {
     none: 'none',
     input: `1px solid #D0CFCF`,
     inputError: '2px solid #CB3D40',
-    bold: '2px solid orangered',
+    boldInput: '1px solid rgba(0, 0, 0, 0.87)',
   },
   borderStyles: {
     solid: 'solid',

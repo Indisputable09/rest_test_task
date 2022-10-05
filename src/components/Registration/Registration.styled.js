@@ -107,13 +107,14 @@ export const FileUploadLabel = styled.label`
       ? 'rgba(126, 126, 126, 1)'
       : p.theme.colors.primaryTextColor};
   background-color: rgba(248, 248, 248, 1);
-  border: 1px solid rgba(208, 207, 207, 1);
+  border: ${p =>
+    p.notFit ? p.theme.borders.inputError : p.theme.borders.input};
   border-radius: 4px;
 
   ::after {
     position: ${p => p.theme.position.absolute};
     box-sizing: border-box;
-    top: -1px;
+    top: ${p => (p.notFit ? '-2px' : '-1px')};
     left: -1px;
     z-index: 3;
     display: inline-block;
@@ -124,7 +125,8 @@ export const FileUploadLabel = styled.label`
     padding: 14px 15px;
     height: 54px;
     color: ${p => p.theme.colors.primaryTextColor};
-    border: 1px solid ${p => p.theme.colors.borderColor};
+    border: ${p => !p.notFit && p.theme.borders.boldInput};
+    border-right: ${p => p.notFit && p.theme.borders.inputError};
     border-radius: ${p => p.theme.radii.sm} ${p => p.theme.radii.none}
       ${p => p.theme.radii.none} ${p => p.theme.radii.sm};
     cursor: pointer;

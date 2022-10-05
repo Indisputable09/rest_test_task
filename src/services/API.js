@@ -40,6 +40,9 @@ export async function getToken() {
 
 export async function getUserById(id) {
   try {
+    if (!id) {
+      return;
+    }
     const user = await axios.get(`users/${id}`);
     console.log('User ', user);
     return user.data.user;

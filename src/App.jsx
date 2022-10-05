@@ -26,22 +26,19 @@ export const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
-  const userId = localStorage.getItem(USER_ID_LS);
+  const userId = localStorage.getItem(USER_ID_LS) || null;
 
   useEffect(() => {
     getToken();
-    async function fetchCurrentUserData() {
-      if (userId) {
-        const userResponse = await getUserById(userId);
-        if (!userResponse) {
-          setUser(null);
-          setLoggedIn(false);
-          return;
-        }
-        setUser(userResponse.name);
+    (async function checkUserId() {
+      const userDataResponse = await getUserById(userId);
+      if (userDataResponse) {
+        setLoggedIn(true);
+        setUser(userDataResponse.name);
+      } else {
+        return;
       }
-    }
-    fetchCurrentUserData();
+    })();
     const timeOutId = setTimeout(() => {
       setShowPreloader(false);
     }, 500);
@@ -51,12 +48,13 @@ export const App = () => {
   }, [loggedIn, userId]);
 
   useEffect(() => {
-    if (user) {
-      setLoggedIn(true);
-    }
     if (loggedIn) {
       (async function asyncFetchUsers() {
         try {
+          // if (loggedIn) {
+          //   setfetchedUsers([]);
+          //   setPage(1);
+          // }
           setStatus(pending);
           const { users } = await fetchUsers(page);
           if (!users ?? users.length === 0) {
@@ -73,7 +71,7 @@ export const App = () => {
         }
       })();
     }
-  }, [idle, loggedIn, page, pending, rejected, resolved, user]);
+  }, [idle, loggedIn, page, pending, rejected, resolved]);
 
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);
@@ -113,6 +111,16 @@ export const App = () => {
             <Header />
             <main>
               <Hero />
+              {/* <Box pt="10" textAlign="center">
+                <Container>
+                  <Userlist
+                    showMoreButtonRef={showMoreButtonRef}
+                    enoughUsers={ENOUGH_USERS}
+                    status={status}
+                    handlePageIncrement={handlePageIncrement}
+                  />
+                </Container>
+              </Box> */}
               {loggedIn && (
                 <Box pt="10" textAlign="center">
                   <Container>

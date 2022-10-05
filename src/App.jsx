@@ -18,7 +18,6 @@ const usersRef = createRef();
 const signUpRef = createRef();
 
 export const App = () => {
-  // console.log('~ signUpRef', signUpRef.current);
   const { idle, pending, resolved, rejected } = Status;
   const [showPreloader, setShowPreloader] = useState(true);
   const [fetchedUsers, setfetchedUsers] = useState([]);
@@ -75,7 +74,7 @@ export const App = () => {
     if (status === 'RESOLVED') {
       setTimeout(() => {
         showMoreButtonRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 300);
+      }, 400);
     }
   };
 

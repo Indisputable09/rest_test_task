@@ -4,7 +4,7 @@ export const theme = {
     cardBg: '#FFFFFF',
     primaryTextColor: 'rgba(0, 0, 0, 0.87)',
     borderColor: 'rgba(0, 0, 0, 0.87)',
-    mainBg: '#E5E5E5',
+    mainBg: '#F8F8F8',
     primary: '#F4E041',
     secondary: '#00BDD3',
     background: '#F8F8F8',
@@ -13,6 +13,9 @@ export const theme = {
     disabledText: 'rgba(255, 255, 255, 0.87)',
     radioButtonIdleColor: 'rgba(208, 207, 207, 1)',
     radioButtonColor: 'rgba(0, 189, 211, 1)',
+    inputBorder: '#D0CFCF',
+    error: '#CB3D40',
+    formColor: '#7e7e7e',
   },
   space: [0, 3, 13, 16, 20, 32, 60, 128, 256, 'auto', 140, 100],
   fontSizes: {
@@ -23,6 +26,7 @@ export const theme = {
   lineHeights: {
     body: 1.6,
     heading: 1,
+    label: 1.16,
   },
   // opacities: {
   //   none: 0,
@@ -41,7 +45,8 @@ export const theme = {
   },
   borders: {
     none: 'none',
-    normal: '1px solid orangered',
+    input: `1px solid #D0CFCF`,
+    inputError: '2px solid #CB3D40',
     bold: '2px solid orangered',
   },
   borderStyles: {

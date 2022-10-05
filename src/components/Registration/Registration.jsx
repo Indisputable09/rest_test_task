@@ -1,12 +1,13 @@
 import { Formik, ErrorMessage } from 'formik';
-import { Notify } from 'notiflix';
 import Positions from 'components/Positions';
 import {
+  ErrorText,
   FileUploadBlock,
   FileUploadInput,
   FileUploadLabel,
   FormInput,
   FormStyled,
+  InputBlock,
   InputLabel,
   NumberExample,
   PositionsBlock,
@@ -22,9 +23,12 @@ import Loader from 'Icons/Loader';
 import { SignupSchema } from 'constants/formValidationConstants';
 import { useUsers } from 'hooks/UsersContext';
 
-const FormError = ({ name }) => {
+export const FormError = ({ name }) => {
   return (
-    <ErrorMessage name={name} render={message => Notify.failure(message)} />
+    <ErrorMessage
+      name={name}
+      render={message => <ErrorText>{message}</ErrorText>}
+    />
   );
 };
 
@@ -109,48 +113,61 @@ const Registration = ({ setUserLoggedIn }) => {
           handleSubmit(validValues);
         }}
       >
-        {({ handleChange, isSubmitting, values }) => {
+        {({ handleChange, isSubmitting, values, errors, touched }) => {
+          // console.log('~ touched', touched);
+          // console.log('~ errors', errors);
           const inputValues = Object.values(values);
           const emptyValues = inputValues.some(item => item === '' || !item);
           return (
             <FormStyled>
-              <InputLabel>
+              <InputBlock>
                 <FormInput
                   id="name"
                   type="text"
                   name="name"
-                  placeholder="Name"
+                  placeholder=" "
                   required
                   onChange={handleChange}
                   value={values.name}
+                  error={errors.name && touched.name ? 'true' : 'false'}
                 />
-              </InputLabel>
-              <FormError name="name" />
-              <InputLabel>
+                <InputLabel htmlFor="name">Your name</InputLabel>
+                <FormError name="name" />
+              </InputBlock>
+              <InputBlock>
                 <FormInput
                   id="email"
                   type="email"
                   name="email"
-                  placeholder="Email"
+                  placeholder=" "
                   required
                   onChange={handleChange}
                   value={values.email}
+                  error={errors.email && touched.email ? 'true' : 'false'}
                 />
-              </InputLabel>
-              <FormError name="email" />
-              <InputLabel>
+                <InputLabel htmlFor="email">Email</InputLabel>
+                <FormError name="email" />
+              </InputBlock>
+              <InputBlock>
                 <FormInput
                   id="phone"
                   type="tel"
                   name="phone"
-                  placeholder="Number"
+                  placeholder=" "
                   required
                   onChange={handleChange}
                   value={values.phone}
+                  error={errors.phone && touched.phone ? 'true' : 'false'}
                 />
-                <NumberExample>+38 (XXX) XXX - XX - XX</NumberExample>
-              </InputLabel>
-              <FormError name="phone" />
+                <InputLabel htmlFor="phone">Phone</InputLabel>
+                {errors.phone && touched.phone ? (
+                  <FormError name="phone" />
+                ) : (
+                  <NumberExample>+38 (XXX) XXX - XX - XX</NumberExample>
+                )}
+                {/* <NumberExample>+38 (XXX) XXX - XX - XX</NumberExample>
+                <FormError name="phone" /> */}
+              </InputBlock>
               <PositionsFileBlock>
                 <PositionsBlock>
                   <PositionsTitle>Select your position</PositionsTitle>
@@ -168,6 +185,7 @@ const Registration = ({ setUserLoggedIn }) => {
                     value={values.file}
                     accept="image/jpeg"
                     required
+                    // error={errors.file && touched.file ? 'true' : 'false'}
                   />
                   <FileUploadLabel htmlFor="file">
                     {file ? file.name : 'Upload your photo'}

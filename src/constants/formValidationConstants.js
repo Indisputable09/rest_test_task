@@ -7,9 +7,9 @@ export const EMAIL_MATCH =
 export const PHONE_MATCH = /^[+]{0,1}380([0-9]{9})$/;
 
 export const nameError =
-  "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan";
+  'Name may contain only letters, apostrophe, dash and spaces';
 export const phoneError =
-  'Phone number must be digits and can contain spaces, dashes, parentheses and must start with code +380';
+  'Phone number must start with the code +380 followed by nine digits';
 export const emailError = 'Invalid email address';
 export const requiredError = 'This field is required';
 export const SignupSchema = object().shape({

@@ -31,13 +31,15 @@ export const App = () => {
   useEffect(() => {
     getToken();
     async function fetchCurrentUserData() {
-      const userResponse = await getUserById(userId);
-      if (!userResponse) {
-        setUser(null);
-        setLoggedIn(false);
-        return;
+      if (userId) {
+        const userResponse = await getUserById(userId);
+        if (!userResponse) {
+          setUser(null);
+          setLoggedIn(false);
+          return;
+        }
+        setUser(userResponse.name);
       }
-      setUser(userResponse.name);
     }
     fetchCurrentUserData();
     const timeOutId = setTimeout(() => {

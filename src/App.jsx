@@ -73,7 +73,11 @@ export const App = () => {
     setPage(prevPage => prevPage + 1);
     if (status === 'RESOLVED') {
       setTimeout(() => {
-        showMoreButtonRef.current?.scrollIntoView({ behavior: 'smooth' });
+        showMoreButtonRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+          inline: 'nearest',
+        });
       }, 400);
     }
   };

@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 const bounceLogo = keyframes`
 0% {
-        transform: translateY(-30px)
+        transform: translateY(-50px)
     }
 
     20% {
@@ -28,5 +28,5 @@ const bounceLogo = keyframes`
 export const LogoIcon = styled.svg`
   width: 104px;
   height: 26px;
-  animation: ${bounceLogo} 500ms both ease-in;
+  animation: ${bounceLogo} 500ms both ease-in 500ms;
 `;

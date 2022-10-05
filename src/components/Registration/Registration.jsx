@@ -1,5 +1,4 @@
 import { Formik, ErrorMessage } from 'formik';
-import { object, string } from 'yup';
 import { Notify } from 'notiflix';
 import Positions from 'components/Positions';
 import {
@@ -20,31 +19,7 @@ import { useState } from 'react';
 import { USER_ID_LS } from 'constants/constants';
 import { postUser } from 'services/API';
 import Loader from 'Icons/Loader';
-
-const NAME_MATCH = "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
-
-const nameError =
-  "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan";
-const nameNumber =
-  'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +';
-const emailError = 'Invalid email address';
-const requiredError = 'This field is required';
-const SignupSchema = object().shape({
-  name: string()
-    .required(requiredError)
-    .matches(NAME_MATCH, nameError)
-    .min(2)
-    .max(60),
-  email: string()
-    .required(requiredError)
-    .matches(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, emailError)
-    .min(2)
-    .max(100)
-    .email(),
-  number: string()
-    .required(requiredError)
-    .matches(/^[+]{0,1}380([0-9]{9})$/, nameNumber),
-});
+import { SignupSchema } from 'constants/formValidationConstants';
 
 const FormError = ({ name }) => {
   return (
@@ -53,16 +28,8 @@ const FormError = ({ name }) => {
 };
 
 const Registration = ({ setUserLoggedIn }) => {
-  const [postingUser, setPostingUser] = useState(false);
   const [file, setFile] = useState('');
   const [notUploadImage, setNotUploadImage] = useState(true);
-  const [values, setValues] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    position: '',
-    file: null,
-  });
 
   const validateFileSize = imageFile => {
     const MAX_FILE_SIZE = 5120;
@@ -102,46 +69,22 @@ const Registration = ({ setUserLoggedIn }) => {
   const handleFileChange = e => {
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
-      setValues(prev => ({
-        ...prev,
-        [e.target.name]: e.target.files[0],
-      }));
       validateFileSize(e.target.files[0]);
     }
   };
 
-  const handleValuesChange = e => {
-    setValues(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handlePositionValueChange = positionNumber => {
-    setValues(prev => ({
-      ...prev,
-      position: +positionNumber,
-    }));
-  };
-
-  const handleSubmit = async e => {
+  const handleSubmit = async valuesToPost => {
     try {
-      e.preventDefault();
-      setPostingUser(true);
-      const postResponse = await postUser(values);
+      const postResponse = await postUser(valuesToPost);
       console.log('~ postResponse', postResponse);
       if (postResponse.success) {
         setUserLoggedIn();
         localStorage.setItem(USER_ID_LS, postResponse.user_id);
       }
-      setPostingUser(false);
     } catch (error) {
       console.log(error);
     }
   };
-
-  const inputValues = Object.values(values);
-  const emptyValues = inputValues.some(item => item === '' || !item);
 
   return (
     <>
@@ -151,77 +94,94 @@ const Registration = ({ setUserLoggedIn }) => {
           name: '',
           email: '',
           phone: '',
+          position: '',
+          file: '',
         }}
         validationSchema={SignupSchema}
+        onSubmit={values => {
+          const validValues = {
+            ...values,
+            position: +values.position,
+            file,
+          };
+          handleSubmit(validValues);
+        }}
       >
-        <FormStyled onSubmit={handleSubmit}>
-          <InputLabel>
-            <FormInput
-              id="name"
-              type="text"
-              name="name"
-              pattern={NAME_MATCH}
-              placeholder="Name"
-              required
-              onChange={handleValuesChange}
-              value={values.name}
-            />
-          </InputLabel>
-          <FormError name="name" />
-          <InputLabel>
-            <FormInput
-              id="email"
-              type="email"
-              name="email"
-              pattern="^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$"
-              placeholder="Email"
-              required
-              onChange={handleValuesChange}
-              value={values.email}
-            />
-          </InputLabel>
-          <FormError name="email" />
-          <InputLabel>
-            <FormInput
-              id="phone"
-              type="tel"
-              name="phone"
-              pattern="^[+]{0,1}380([0-9]{9})$"
-              placeholder="Number"
-              required
-              onChange={handleValuesChange}
-              value={values.phone}
-            />
-            <NumberExample>+38 (XXX) XXX - XX - XX</NumberExample>
-          </InputLabel>
-          <FormError name="number" />
-          <PositionsFileBlock>
-            <PositionsBlock>
-              <PositionsTitle>Select your position</PositionsTitle>
-              <Positions
-                handlePositionValueChange={handlePositionValueChange}
-                values={values}
-              />
-            </PositionsBlock>
-            <FileUploadBlock>
-              <FileUploadInput
-                type="file"
-                name="file"
-                id="file"
-                onChange={handleFileChange}
-                accept="image/jpeg"
-                required
-              />
-              <FileUploadLabel htmlFor="file">
-                {file ? file.name : 'Upload your photo'}
-              </FileUploadLabel>
-            </FileUploadBlock>
-          </PositionsFileBlock>
-          <FormError name="file" />
-          <SignUpButton disabled={emptyValues || notUploadImage} type="submit">
-            {postingUser ? <Loader /> : 'Sign up'}
-          </SignUpButton>
-        </FormStyled>
+        {({ handleChange, isSubmitting, values }) => {
+          const inputValues = Object.values(values);
+          const emptyValues = inputValues.some(item => item === '' || !item);
+          return (
+            <FormStyled>
+              <InputLabel>
+                <FormInput
+                  id="name"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  required
+                  onChange={handleChange}
+                  value={values.name}
+                />
+              </InputLabel>
+              <FormError name="name" />
+              <InputLabel>
+                <FormInput
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                  onChange={handleChange}
+                  value={values.email}
+                />
+              </InputLabel>
+              <FormError name="email" />
+              <InputLabel>
+                <FormInput
+                  id="phone"
+                  type="tel"
+                  name="phone"
+                  placeholder="Number"
+                  required
+                  onChange={handleChange}
+                  value={values.phone}
+                />
+                <NumberExample>+38 (XXX) XXX - XX - XX</NumberExample>
+              </InputLabel>
+              <FormError name="phone" />
+              <PositionsFileBlock>
+                <PositionsBlock>
+                  <PositionsTitle>Select your position</PositionsTitle>
+                  <Positions handleChange={handleChange} values={values} />
+                </PositionsBlock>
+                <FileUploadBlock>
+                  <FileUploadInput
+                    type="file"
+                    name="file"
+                    id="file"
+                    onChange={e => {
+                      handleChange(e);
+                      handleFileChange(e);
+                    }}
+                    value={values.file}
+                    accept="image/jpeg"
+                    required
+                  />
+                  <FileUploadLabel htmlFor="file">
+                    {file ? file.name : 'Upload your photo'}
+                  </FileUploadLabel>
+                </FileUploadBlock>
+              </PositionsFileBlock>
+              <FormError name="file" />
+              <SignUpButton
+                disabled={emptyValues || notUploadImage}
+                type="submit"
+              >
+                {isSubmitting ? <Loader /> : 'Sign up'}
+              </SignUpButton>
+            </FormStyled>
+          );
+        }}
       </Formik>
     </>
   );

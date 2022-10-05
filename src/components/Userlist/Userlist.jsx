@@ -10,8 +10,6 @@ const Userlist = ({ enoughUsers, status, handlePageIncrement }) => {
       <UserListGrid>
         <UserItem />
       </UserListGrid>
-      {/* <Loader /> */}
-      {/* {addingNewInfo && <Loader />} */}
       {status !== 'REJECTED' && enoughUsers && (
         <ShowMoreButton onClick={handlePageIncrement}>
           {status === 'PENDING' ? <Loader /> : 'Show more'}

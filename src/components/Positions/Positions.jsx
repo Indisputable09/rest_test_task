@@ -7,11 +7,10 @@ import {
 } from './Positions.styled';
 import { fetchPositions } from 'services/API';
 
-const Positions = ({ handlePositionValueChange, values }) => {
-  // const { getPosition } = useUsers();
+const Positions = ({ handleChange }) => {
   const [positions, setPositions] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState('');
-  // const [selectedPositionId, setSelectedPositionId] = useState('');
+
   useEffect(() => {
     (async function asyncFetchPositions() {
       try {
@@ -23,14 +22,8 @@ const Positions = ({ handlePositionValueChange, values }) => {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   getPosition(+selectedPositionId);
-  // }, [getPosition, selectedPositionId]);
-
   const handlePositionChange = e => {
-    setSelectedPosition(e.currentTarget.value);
-    // setSelectedPositionId(e.currentTarget.id);
-    handlePositionValueChange(e.currentTarget.id);
+    setSelectedPosition(+e.currentTarget.value);
   };
 
   return positions.map(({ id, name }) => (
@@ -39,9 +32,12 @@ const Positions = ({ handlePositionValueChange, values }) => {
         id={id}
         type="radio"
         name="position"
-        value={name}
-        checked={selectedPosition === name}
-        onChange={handlePositionChange}
+        value={id}
+        checked={selectedPosition === id}
+        onChange={e => {
+          handleChange(e);
+          handlePositionChange(e);
+        }}
       />
       <CustomRadioButton></CustomRadioButton>
       <LabelText>{name}</LabelText>

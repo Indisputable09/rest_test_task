@@ -20,6 +20,7 @@ import { USER_ID_LS } from 'constants/constants';
 import { postUser } from 'services/API';
 import Loader from 'Icons/Loader';
 import { SignupSchema } from 'constants/formValidationConstants';
+import { useUsers } from 'hooks/UsersContext';
 
 const FormError = ({ name }) => {
   return (
@@ -30,6 +31,7 @@ const FormError = ({ name }) => {
 const Registration = ({ setUserLoggedIn }) => {
   const [file, setFile] = useState('');
   const [notUploadImage, setNotUploadImage] = useState(true);
+  const { signUpRef } = useUsers();
 
   const validateFileSize = imageFile => {
     const MAX_FILE_SIZE = 5120;
@@ -88,7 +90,7 @@ const Registration = ({ setUserLoggedIn }) => {
 
   return (
     <>
-      <PostTitle>Working with POST request</PostTitle>
+      <PostTitle ref={signUpRef}>Working with POST request</PostTitle>
       <Formik
         initialValues={{
           name: '',

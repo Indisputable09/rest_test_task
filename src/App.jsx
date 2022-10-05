@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Status, USER_ID_LS } from 'constants/constants';
 import { GlobalStyle } from 'components/GlobalStyle';
 import Header from 'components/Header';
@@ -13,7 +13,12 @@ import SuccessImage from 'Icons/SuccessImage';
 import Preloader from 'Icons/Preloader';
 import { CenteredLoader } from 'Icons/Loader/Loader.styled';
 
+const showMoreButtonRef = createRef();
+const usersRef = createRef();
+const signUpRef = createRef();
+
 export const App = () => {
+  // console.log('~ signUpRef', signUpRef.current);
   const { idle, pending, resolved, rejected } = Status;
   const [showPreloader, setShowPreloader] = useState(true);
   const [fetchedUsers, setfetchedUsers] = useState([]);
@@ -67,12 +72,11 @@ export const App = () => {
 
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);
-    // setTimeout(() => {
-    //   window.scrollTo({
-    //     top: document.documentElement.scrollHeight,
-    //     behavior: 'smooth',
-    //   });
-    // }, 700);
+    if (status === 'RESOLVED') {
+      setTimeout(() => {
+        showMoreButtonRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
   };
 
   const setUserLoggedIn = () => {
@@ -87,6 +91,8 @@ export const App = () => {
         value={{
           userName: user,
           fetchedUsers,
+          usersRef,
+          signUpRef,
         }}
       >
         {showPreloader ? (
@@ -102,6 +108,7 @@ export const App = () => {
                 <Box pt="10" textAlign="center">
                   <Container>
                     <Userlist
+                      showMoreButtonRef={showMoreButtonRef}
                       enoughUsers={ENOUGH_USERS}
                       status={status}
                       handlePageIncrement={handlePageIncrement}

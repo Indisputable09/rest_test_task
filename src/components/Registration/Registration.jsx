@@ -32,11 +32,11 @@ export const FormError = ({ name }) => {
   );
 };
 
-const Registration = ({ setUserLoggedIn }) => {
+const Registration = () => {
   const [file, setFile] = useState('');
   const [notUploadImage, setNotUploadImage] = useState(true);
   const [fileUploadErrorText, setFileUploadErrorText] = useState('');
-  const { signUpRef } = useUsers();
+  const { signUpRef, handleSubmitClick } = useUsers();
 
   const validateFileSize = imageFile => {
     const MAX_FILE_SIZE = 5120;
@@ -86,7 +86,8 @@ const Registration = ({ setUserLoggedIn }) => {
       const postResponse = await postUser(valuesToPost);
       console.log('~ postResponse', postResponse);
       if (postResponse.success) {
-        setUserLoggedIn();
+        handleSubmitClick();
+        // setUserLoggedIn();
         localStorage.setItem(USER_ID_LS, postResponse.user_id);
       }
     } catch (error) {

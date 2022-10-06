@@ -48,30 +48,24 @@ export const App = () => {
   }, [loggedIn, userId]);
 
   useEffect(() => {
-    if (loggedIn) {
-      (async function asyncFetchUsers() {
-        try {
-          // if (loggedIn) {
-          //   setfetchedUsers([]);
-          //   setPage(1);
-          // }
-          setStatus(pending);
-          const { users } = await fetchUsers(page);
-          if (!users ?? users.length === 0) {
-            setStatus(idle);
-            return;
-          }
-          setStatus(resolved);
-          console.log('~ fetchedUsers', users);
-          setfetchedUsers(prevUsers => [...prevUsers, ...users]);
+    (async function asyncFetchUsers() {
+      try {
+        setStatus(pending);
+        const { users } = await fetchUsers(page);
+        if (!users ?? users.length === 0) {
+          setStatus(idle);
           return;
-        } catch (error) {
-          console.log(error);
-          setStatus(rejected);
         }
-      })();
-    }
-  }, [idle, loggedIn, page, pending, rejected, resolved]);
+        setStatus(resolved);
+        console.log('~ fetchedUsers', users);
+        setfetchedUsers(prevUsers => [...prevUsers, ...users]);
+        return;
+      } catch (error) {
+        console.log(error);
+        setStatus(rejected);
+      }
+    })();
+  }, [idle, page, pending, rejected, resolved]);
 
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);
@@ -86,7 +80,9 @@ export const App = () => {
     }
   };
 
-  const setUserLoggedIn = () => {
+  const handleSubmitClick = () => {
+    setPage(1);
+    setfetchedUsers([]);
     setLoggedIn(true);
   };
 
@@ -100,6 +96,7 @@ export const App = () => {
           fetchedUsers,
           usersRef,
           signUpRef,
+          handleSubmitClick,
         }}
       >
         {showPreloader ? (
@@ -111,7 +108,7 @@ export const App = () => {
             <Header />
             <main>
               <Hero />
-              {/* <Box pt="10" textAlign="center">
+              <Box pt="10" textAlign="center">
                 <Container>
                   <Userlist
                     showMoreButtonRef={showMoreButtonRef}
@@ -120,8 +117,8 @@ export const App = () => {
                     handlePageIncrement={handlePageIncrement}
                   />
                 </Container>
-              </Box> */}
-              {loggedIn && (
+              </Box>
+              {/* {loggedIn && (
                 <Box pt="10" textAlign="center">
                   <Container>
                     <Userlist
@@ -132,14 +129,10 @@ export const App = () => {
                     />
                   </Container>
                 </Box>
-              )}
+              )} */}
               <Box pt="10" pb="11" textAlign="center">
                 <Container>
-                  {loggedIn ? (
-                    <SuccessImage />
-                  ) : (
-                    <Registration setUserLoggedIn={setUserLoggedIn} />
-                  )}
+                  {loggedIn ? <SuccessImage /> : <Registration />}
                 </Container>
               </Box>
             </main>

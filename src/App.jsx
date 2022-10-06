@@ -12,6 +12,7 @@ import Container from 'components/Container';
 import SuccessImage from 'Icons/SuccessImage';
 import Preloader from 'Icons/Preloader';
 import { CenteredLoader } from 'Icons/Loader/Loader.styled';
+import UpButton from 'components/UpButton';
 
 const showMoreButtonRef = createRef();
 const usersRef = createRef();
@@ -25,6 +26,7 @@ export const App = () => {
   const [status, setStatus] = useState(idle);
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [showUpButton, setShowUpButton] = useState(false);
 
   const userId = localStorage.getItem(USER_ID_LS) || null;
 
@@ -44,6 +46,7 @@ export const App = () => {
     }, 500);
     return () => {
       clearTimeout(timeOutId);
+      window.removeEventListener('scroll', handleShowUpButton);
     };
   }, [loggedIn, userId]);
 
@@ -66,7 +69,6 @@ export const App = () => {
       }
     })();
   }, [idle, page, pending, rejected, resolved]);
-
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);
     if (status === 'RESOLVED') {
@@ -82,9 +84,32 @@ export const App = () => {
 
   const handleSubmitClick = () => {
     setPage(1);
-    setfetchedUsers([]);
     setLoggedIn(true);
+    if (fetchedUsers.length > 6) {
+      setfetchedUsers([]);
+    }
   };
+
+  const handleUpButtonClick = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  };
+
+  const handleShowUpButton = () => {
+    if (window.scrollY > 300) {
+      setShowUpButton(true);
+      return;
+    }
+    if (window.scrollY <= 300) {
+      setShowUpButton(false);
+      return;
+    }
+  };
+
+  window.addEventListener('scroll', handleShowUpButton);
+
+  // useEffect(() => {
+  //   return window.removeEventListener('scroll', handleShowUpButton);
+  // });
 
   const ENOUGH_USERS = fetchedUsers.length % PER_PAGE === 0;
   return (
@@ -136,6 +161,9 @@ export const App = () => {
                 </Container>
               </Box>
             </main>
+            {showUpButton && (
+              <UpButton handleUpButtonClick={handleUpButtonClick} />
+            )}
           </>
         )}
       </UsersContext.Provider>

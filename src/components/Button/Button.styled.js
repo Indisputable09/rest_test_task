@@ -41,3 +41,25 @@ export const ShowMoreButton = styled(ButtonStyled)`
   margin: 50px ${p => p.theme.space[9]} ${p => p.theme.space[0]}px
     ${p => p.theme.space[9]};
 `;
+
+export const UpButtonStyled = styled(ButtonStyled)`
+  position: ${p => p.theme.position.fixed};
+  bottom: ${p => p.theme.space[5]}px;
+  right: ${p => p.theme.space[4]}px;
+  min-width: ${p => p.theme.space[5]}px;
+  min-height: ${p => p.theme.space[5]}px;
+  border-radius: ${p => p.theme.radii.round};
+  padding: 5px;
+  opacity: 0.33;
+  transition: ${p => p.theme.transition.opacity};
+
+  :hover {
+    opacity: ${p => p.theme.opacities.full};
+  }
+
+  @media screen and (min-width: 768px) {
+    right: 3%;
+    width: 40px;
+    height: 40px;
+  }
+`;

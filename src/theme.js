@@ -28,9 +28,10 @@ export const theme = {
     heading: 1,
     label: 1.16,
   },
-  // opacities: {
-  //   none: 0,
-  // },
+  opacities: {
+    none: 0,
+    full: 1,
+  },
   // shadows: {
   //   main: '0 7px 10px rgba(0, 0, 0, 0.4)',
   //   cardHover:
@@ -42,6 +43,7 @@ export const theme = {
     color: 'color 250ms cubic-bezier(0.4, 0, 0.2, 1)',
     backgroundColor: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1)',
     all: 'all 250ms cubic-bezier(0.4, 0, 0.2, 1)',
+    opacity: 'opacity 250ms cubic-bezier(0.4, 0, 0.2, 1)',
   },
   borders: {
     none: 'none',

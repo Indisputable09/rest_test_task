@@ -21,6 +21,7 @@ export const ButtonStyled = styled(Button)`
   }
 
   &:disabled {
+    cursor: not-allowed;
     background-color: ${p => p.theme.colors.disabled};
     color: ${p => p.theme.colors.disabledText};
   }

@@ -27,6 +27,7 @@ export const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [showUpButton, setShowUpButton] = useState(false);
+  // const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
   const userId = localStorage.getItem(USER_ID_LS) || null;
 
@@ -105,11 +106,11 @@ export const App = () => {
     }
   };
 
-  window.addEventListener('scroll', handleShowUpButton);
+  // const handleCoordinatesSet = e => {
+  //   setCoordinates({ x: e.nativeEvent.clientX, y: e.nativeEvent.clientY });
+  // };
 
-  // useEffect(() => {
-  //   return window.removeEventListener('scroll', handleShowUpButton);
-  // });
+  window.addEventListener('scroll', handleShowUpButton);
 
   const ENOUGH_USERS = fetchedUsers.length % PER_PAGE === 0;
   return (
@@ -122,6 +123,8 @@ export const App = () => {
           usersRef,
           signUpRef,
           handleSubmitClick,
+          // handleCoordinatesSet,
+          // coordinates,
         }}
       >
         {showPreloader ? (

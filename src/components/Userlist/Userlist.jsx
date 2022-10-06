@@ -11,6 +11,28 @@ const Userlist = ({
   showMoreButtonRef,
 }) => {
   const { usersRef } = useUsers();
+
+  // const [showModal, setshowModal] = useState(false);
+  // const [modalContent, setModalContent] = useState({
+  //   name: '',
+  //   photo: '',
+  //   position: '',
+  //   email: '',
+  //   phone: '',
+  // });
+
+  // const handleShowModalContent = e => {
+  //   if (e.target.href) {
+  //     return;
+  //   }
+  //   console.log('EEEE ', e.currentTarget);
+  //   setshowModal(!showModal);
+  // };
+
+  // const handleCloseModal = () => {
+  //   setshowModal(!showModal);
+  // };
+
   return (
     <>
       <UserListTitle ref={usersRef}>Working with GET request</UserListTitle>
@@ -22,6 +44,11 @@ const Userlist = ({
           {status === 'PENDING' ? <Loader /> : 'Show more'}
         </ShowMoreButton>
       )}
+      {/* {showModal && (
+        <Modal onClose={handleCloseModal}>
+          <div>Here</div>
+        </Modal>
+      )} */}
     </>
   );
 };

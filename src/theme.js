@@ -16,6 +16,7 @@ export const theme = {
     inputBorder: '#D0CFCF',
     error: '#CB3D40',
     formColor: '#7e7e7e',
+    modalBg: 'rgba(0, 0, 0, 0.3)',
   },
   space: [0, 3, 13, 16, 20, 32, 60, 128, 256, 'auto', 140, 100],
   fontSizes: {

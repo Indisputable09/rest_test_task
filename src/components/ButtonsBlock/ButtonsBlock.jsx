@@ -17,11 +17,9 @@ const ButtonsBlock = () => {
   return (
     <Box as="ul" display="flex" alignItems="center">
       <ButtonListItem>
-        {userName && (
-          <UsersButton onClick={handleClick} ref={usersRef} name="users">
-            Users
-          </UsersButton>
-        )}
+        <UsersButton onClick={handleClick} ref={usersRef} name="users">
+          Users
+        </UsersButton>
       </ButtonListItem>
       <ButtonListItem>
         {userName ? (

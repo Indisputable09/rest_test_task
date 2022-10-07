@@ -34,13 +34,11 @@ export const App = () => {
     getToken();
     (async function checkUserId() {
       const userDataResponse = await getUserById(userId);
-      if (userDataResponse) {
-        console.log('Here');
-        setLoggedIn(true);
-        setUser(userDataResponse.name);
-      } else {
+      if (!userDataResponse) {
         return;
       }
+      setLoggedIn(true);
+      setUser(userDataResponse.name);
     })();
     const timeOutId = setTimeout(() => {
       setShowPreloader(false);
@@ -63,11 +61,9 @@ export const App = () => {
         setStatus(resolved);
         console.log('~ fetchedUsers', users);
         if (page === 1) {
-          console.log('Page 1 and users ', users);
           setfetchedUsers(users);
         } else if (page !== 1) {
           setfetchedUsers(prevUsers => [...prevUsers, ...users]);
-          console.log('Page not 1 and users ', users);
         }
         return;
       } catch (error) {
@@ -76,28 +72,6 @@ export const App = () => {
       }
     })();
   }, [idle, page, pending, rejected, resolved, loggedIn]);
-
-  // useEffect(() => {
-  //   if (page !== 1) {
-  //     console.log('Page ', page);
-  //     return;
-  //   }
-  //   (async function asyncFetchUsers() {
-  //     try {
-  //       const { users } = await fetchUsers(page);
-  //       if (!users ?? users.length === 0) {
-  //         return;
-  //       }
-  //       setStatus(resolved);
-  //       console.log('~ fetchedUsers in second effect', users);
-  //       setfetchedUsers(users);
-  //       return;
-  //     } catch (error) {
-  //       console.log(error);
-  //       setStatus(rejected);
-  //     }
-  //   })();
-  // }, [page, rejected, resolved, loggedIn]);
 
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);
@@ -115,9 +89,7 @@ export const App = () => {
   const handleSubmitClick = () => {
     setPage(1);
     setLoggedIn(true);
-    // if (fetchedUsers.length > 6) {
     setfetchedUsers([]);
-    // }
   };
 
   const handleUpButtonClick = () => {

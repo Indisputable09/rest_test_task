@@ -15,27 +15,21 @@ export async function fetchUsers(page) {
       },
     });
     return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }
 
 export async function fetchPositions() {
   try {
     const response = await axios.get('positions');
     return response.data.positions;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }
 
 export async function getToken() {
   try {
     const authToken = await axios.get('token');
     axios.defaults.headers.common['Token'] = authToken.data.token;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 }
 
 export async function getUserById(id) {
@@ -47,7 +41,7 @@ export async function getUserById(id) {
     console.log('User ', user);
     return user.data.user;
   } catch (error) {
-    console.log(error);
+    return error.response.data.success;
   }
 }
 

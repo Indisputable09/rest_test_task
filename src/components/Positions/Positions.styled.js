@@ -51,8 +51,8 @@ export const CustomRadioButton = styled.span`
     background: ${p => p.theme.colors.radioButtonColor};
   }
 
-  ${PositionsItem}:hover & {
-    background-color: ${p => p.theme.colors.background};
+  ${PositionsItem}:hover > & {
+    background-color: ${p => p.theme.colors.radioButtonIdleColor};
   }
 
   ${RadioButton}:checked ~ & {

@@ -1,18 +1,8 @@
 import { Formik, ErrorMessage } from 'formik';
-import Positions from 'components/Positions';
 import {
   ErrorText,
-  FileUploadBlock,
-  FileUploadInput,
-  FileUploadLabel,
-  FormInput,
   FormStyled,
-  InputBlock,
-  InputLabel,
-  NumberExample,
-  PositionsBlock,
-  PositionsFileBlock,
-  PositionsTitle,
+  PostErrorText,
   PostTitle,
 } from './Registration.styled';
 import { SignUpButton } from 'components/Button/Button.styled';
@@ -22,6 +12,10 @@ import { postUser } from 'services/API';
 import Loader from 'Icons/Loader';
 import { SignupSchema } from 'constants/formValidationConstants';
 import { useUsers } from 'hooks/UsersContext';
+import NameInput from 'components/NameInput';
+import EmailInput from 'components/EmailInput';
+import PhoneInput from 'components/PhoneInput';
+import UploadControl from 'components/UploadControl';
 
 export const FormError = ({ name }) => {
   return (
@@ -36,6 +30,7 @@ const Registration = () => {
   const [file, setFile] = useState('');
   const [notUploadImage, setNotUploadImage] = useState(true);
   const [fileUploadErrorText, setFileUploadErrorText] = useState('');
+  const [postError, setPostError] = useState('');
   const { signUpRef, handleSubmitClick } = useUsers();
 
   const validateFileSize = imageFile => {
@@ -83,12 +78,13 @@ const Registration = () => {
 
   const handleSubmit = async valuesToPost => {
     try {
-      const postResponse = await postUser(valuesToPost);
-      console.log('~ postResponse', postResponse);
-      if (postResponse.success) {
+      const response = await postUser(valuesToPost);
+      if (response.status === 201 && response.data?.success) {
+        setPostError('');
         handleSubmitClick();
-        // setUserLoggedIn();
-        localStorage.setItem(USER_ID_LS, postResponse.user_id);
+        localStorage.setItem(USER_ID_LS, response.data.user_id);
+      } else if (response.status !== 201) {
+        setPostError(response.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -107,13 +103,16 @@ const Registration = () => {
           file: '',
         }}
         validationSchema={SignupSchema}
-        onSubmit={values => {
+        onSubmit={async (values, actions) => {
           const validValues = {
             ...values,
             position: +values.position,
             file,
           };
-          handleSubmit(validValues);
+          await handleSubmit(validValues);
+          if (postError !== '') {
+            actions.setSubmitting(false);
+          }
         }}
       >
         {({ handleChange, isSubmitting, values, errors, touched }) => {
@@ -121,86 +120,38 @@ const Registration = () => {
           const emptyValues = inputValues.some(item => item === '' || !item);
           return (
             <FormStyled>
-              <InputBlock>
-                <FormInput
-                  id="name"
-                  type="text"
-                  name="name"
-                  placeholder=" "
-                  required
-                  onChange={handleChange}
-                  value={values.name}
-                  error={errors.name && touched.name ? 'true' : 'false'}
-                />
-                <InputLabel htmlFor="name">Your name</InputLabel>
-                <FormError name="name" />
-              </InputBlock>
-              <InputBlock>
-                <FormInput
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder=" "
-                  required
-                  onChange={handleChange}
-                  value={values.email}
-                  error={errors.email && touched.email ? 'true' : 'false'}
-                />
-                <InputLabel htmlFor="email">Email</InputLabel>
-                <FormError name="email" />
-              </InputBlock>
-              <InputBlock>
-                <FormInput
-                  id="phone"
-                  type="tel"
-                  name="phone"
-                  placeholder=" "
-                  required
-                  onChange={handleChange}
-                  value={values.phone}
-                  error={errors.phone && touched.phone ? 'true' : 'false'}
-                />
-                <InputLabel htmlFor="phone">Phone</InputLabel>
-                {errors.phone && touched.phone ? (
-                  <FormError name="phone" />
-                ) : (
-                  <NumberExample>+38 (XXX) XXX - XX - XX</NumberExample>
-                )}
-              </InputBlock>
-              <PositionsFileBlock>
-                <PositionsBlock>
-                  <PositionsTitle>Select your position</PositionsTitle>
-                  <Positions handleChange={handleChange} values={values} />
-                </PositionsBlock>
-                <FileUploadBlock>
-                  <FileUploadInput
-                    type="file"
-                    name="file"
-                    id="file"
-                    onChange={e => {
-                      handleChange(e);
-                      handleFileChange(e);
-                    }}
-                    value={values.file}
-                    accept="image/jpeg"
-                    required
-                  />
-                  <FileUploadLabel
-                    htmlFor="file"
-                    notFit={fileUploadErrorText === '' ? false : true}
-                  >
-                    {file ? file.name : 'Upload your photo'}
-                  </FileUploadLabel>
-                  {fileUploadErrorText === '' ? null : (
-                    <ErrorText>{fileUploadErrorText}</ErrorText>
-                  )}
-                </FileUploadBlock>
-              </PositionsFileBlock>
+              <NameInput
+                handleChange={handleChange}
+                value={values.name}
+                nameError={errors.name}
+                touchedError={touched.name}
+              />
+              <EmailInput
+                handleChange={handleChange}
+                value={values.email}
+                emailError={errors.email}
+                touchedError={touched.email}
+              />
+              <PhoneInput
+                handleChange={handleChange}
+                value={values.phone}
+                phoneError={errors.phone}
+                touchedError={touched.phone}
+              />
+              <UploadControl
+                handleChange={handleChange}
+                handleFileChange={handleFileChange}
+                fileValue={values.file}
+                notFit={fileUploadErrorText === '' ? false : true}
+                presentFile={file}
+                fileUploadErrorText={fileUploadErrorText}
+              />
               <SignUpButton
                 disabled={emptyValues || notUploadImage}
                 type="submit"
               >
                 {isSubmitting ? <Loader /> : 'Sign up'}
+                {postError !== '' && <PostErrorText>{postError}</PostErrorText>}
               </SignUpButton>
             </FormStyled>
           );

@@ -28,6 +28,7 @@ export const ButtonStyled = styled(Button)`
 `;
 
 export const SignUpButton = styled(ButtonStyled)`
+  position: relative;
   padding: 4px 22px;
   margin-left: ${p => p.theme.space[9]};
   margin-right: ${p => p.theme.space[9]};

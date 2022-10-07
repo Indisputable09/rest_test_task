@@ -1,26 +1,49 @@
+import Positions from 'components/Positions';
+import {
+  ErrorText,
+  FileUploadBlock,
+  FileUploadInput,
+  FileUploadLabel,
+  PositionsBlock,
+  PositionsFileBlock,
+  PositionsTitle,
+} from 'components/Registration/Registration.styled';
+
 const UploadControl = ({
-  children,
-  value,
-  onChange,
-  disabled,
-  accept,
-  ...props
+  handleChange,
+  handleFileChange,
+  fileValue,
+  notFit,
+  presentFile,
+  fileUploadErrorText,
 }) => {
   return (
-    <label htmlFor="file">
-      <input
-        value={value}
-        accept={accept}
-        disabled={disabled}
-        style={{ display: 'none' }}
-        id="file"
-        type="file"
-        name="file"
-        onChange={disabled ? () => {} : onChange}
-        {...props}
-      />
-      {children}
-    </label>
+    <PositionsFileBlock>
+      <PositionsBlock>
+        <PositionsTitle>Select your position</PositionsTitle>
+        <Positions handleChange={handleChange} />
+      </PositionsBlock>
+      <FileUploadBlock>
+        <FileUploadInput
+          type="file"
+          name="file"
+          id="file"
+          onChange={e => {
+            handleChange(e);
+            handleFileChange(e);
+          }}
+          value={fileValue}
+          accept="image/jpeg"
+          required
+        />
+        <FileUploadLabel htmlFor="file" notFit={notFit}>
+          {presentFile ? presentFile.name : 'Upload your photo'}
+        </FileUploadLabel>
+        {fileUploadErrorText === '' ? null : (
+          <ErrorText>{fileUploadErrorText}</ErrorText>
+        )}
+      </FileUploadBlock>
+    </PositionsFileBlock>
   );
 };
 

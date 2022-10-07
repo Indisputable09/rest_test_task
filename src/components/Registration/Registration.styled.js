@@ -162,12 +162,11 @@ export const ErrorText = styled.p`
   line-height: ${p => p.theme.lineHeights.label};
 
   color: ${p => p.theme.colors.error};
-
-  /* :last-child {
-    color: black;
-  } */
 `;
 
-// export const ErrorPhonetext = styled(ErrorText)`
-//   top: 74px;
-// `;
+export const PostErrorText = styled(ErrorText)`
+  top: 150%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+`;

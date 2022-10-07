@@ -27,7 +27,6 @@ export const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [showUpButton, setShowUpButton] = useState(false);
-  // const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
   const userId = localStorage.getItem(USER_ID_LS) || null;
 
@@ -36,6 +35,7 @@ export const App = () => {
     (async function checkUserId() {
       const userDataResponse = await getUserById(userId);
       if (userDataResponse) {
+        console.log('Here');
         setLoggedIn(true);
         setUser(userDataResponse.name);
       } else {
@@ -62,14 +62,43 @@ export const App = () => {
         }
         setStatus(resolved);
         console.log('~ fetchedUsers', users);
-        setfetchedUsers(prevUsers => [...prevUsers, ...users]);
+        if (page === 1) {
+          console.log('Page 1 and users ', users);
+          setfetchedUsers(users);
+        } else if (page !== 1) {
+          setfetchedUsers(prevUsers => [...prevUsers, ...users]);
+          console.log('Page not 1 and users ', users);
+        }
         return;
       } catch (error) {
         console.log(error);
         setStatus(rejected);
       }
     })();
-  }, [idle, page, pending, rejected, resolved]);
+  }, [idle, page, pending, rejected, resolved, loggedIn]);
+
+  // useEffect(() => {
+  //   if (page !== 1) {
+  //     console.log('Page ', page);
+  //     return;
+  //   }
+  //   (async function asyncFetchUsers() {
+  //     try {
+  //       const { users } = await fetchUsers(page);
+  //       if (!users ?? users.length === 0) {
+  //         return;
+  //       }
+  //       setStatus(resolved);
+  //       console.log('~ fetchedUsers in second effect', users);
+  //       setfetchedUsers(users);
+  //       return;
+  //     } catch (error) {
+  //       console.log(error);
+  //       setStatus(rejected);
+  //     }
+  //   })();
+  // }, [page, rejected, resolved, loggedIn]);
+
   const handlePageIncrement = () => {
     setPage(prevPage => prevPage + 1);
     if (status === 'RESOLVED') {
@@ -86,9 +115,9 @@ export const App = () => {
   const handleSubmitClick = () => {
     setPage(1);
     setLoggedIn(true);
-    if (fetchedUsers.length > 6) {
-      setfetchedUsers([]);
-    }
+    // if (fetchedUsers.length > 6) {
+    setfetchedUsers([]);
+    // }
   };
 
   const handleUpButtonClick = () => {
@@ -106,10 +135,6 @@ export const App = () => {
     }
   };
 
-  // const handleCoordinatesSet = e => {
-  //   setCoordinates({ x: e.nativeEvent.clientX, y: e.nativeEvent.clientY });
-  // };
-
   window.addEventListener('scroll', handleShowUpButton);
 
   const ENOUGH_USERS = fetchedUsers.length % PER_PAGE === 0;
@@ -123,8 +148,6 @@ export const App = () => {
           usersRef,
           signUpRef,
           handleSubmitClick,
-          // handleCoordinatesSet,
-          // coordinates,
         }}
       >
         {showPreloader ? (

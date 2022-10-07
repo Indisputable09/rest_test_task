@@ -7,7 +7,7 @@ export const theme = {
     mainBg: '#F8F8F8',
     primary: '#F4E041',
     secondary: '#00BDD3',
-    background: '#F8F8F8',
+    // background: '#F8F8F8',
     hover: '#FFE302',
     disabled: '#B4B4B4',
     disabledText: 'rgba(255, 255, 255, 0.87)',
@@ -33,11 +33,6 @@ export const theme = {
     none: 0,
     full: 1,
   },
-  // shadows: {
-  //   main: '0 7px 10px rgba(0, 0, 0, 0.4)',
-  //   cardHover:
-  //     '0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)',
-  // },
   transition: {
     transform: 'transform 300ms cubic-bezier(0.4, 0, 0.2, 1)',
     boxShadow: 'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1)',

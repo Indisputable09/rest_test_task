@@ -1,1 +1,1 @@
-// export { default } from './UploadControl';
+export { default } from './UploadControl';

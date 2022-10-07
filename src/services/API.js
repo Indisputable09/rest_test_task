@@ -61,8 +61,8 @@ export async function postUser(credentials = {}) {
     formData.append('photo', credentials.file);
 
     const response = await axios.post('users', formData);
-    return response.data;
+    return response;
   } catch (error) {
-    console.log(error);
+    return error.response;
   }
 }

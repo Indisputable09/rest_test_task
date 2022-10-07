@@ -5,6 +5,7 @@ export const UserListItem = styled.li`
 `;
 
 export const UserCard = styled.div`
+  cursor: pointer;
   background-color: ${p => p.theme.colors.cardBg};
   border-radius: ${p => p.theme.radii.card};
   padding: ${p => p.theme.space[4]}px;

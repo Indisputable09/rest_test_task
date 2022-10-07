@@ -26,7 +26,7 @@ const TippyTool = ({ children, description }) => {
 
   return (
     <Tippy
-      delay={[500, 100]}
+      delay={[300, 100]}
       placement="bottom"
       render={attrs => (
         <TippyBox style={{ scale, opacity }} {...attrs}>

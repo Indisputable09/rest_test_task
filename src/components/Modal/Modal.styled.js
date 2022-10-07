@@ -1,3 +1,4 @@
+import { UserCard } from 'components/UserItem/UserItem.styled';
 import styled from 'styled-components';
 
 export const Overlay = styled.div`
@@ -10,7 +11,7 @@ export const Overlay = styled.div`
   z-index: 1200;
   opacity: ${p => (p.showModal ? 1 : 0)};
   pointer-events: ${p => !p.showModal && 'none'};
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: ${p => p.theme.transition.opacity};
 `;
 
 export const ModalWindow = styled.div`
@@ -25,4 +26,11 @@ export const ModalWindow = styled.div`
   border-radius: ${p => p.theme.radii.card};
   width: 328px;
   transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  & > ${UserCard} {
+    cursor: unset;
+  }
 `;
+
+// top 500ms cubic-bezier(0.4, 0, 0.2, 1),
+//     left 500ms cubic-bezier(0.4, 0, 0.2, 1)

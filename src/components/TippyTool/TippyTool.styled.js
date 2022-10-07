@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const TippyBox = styled(motion.div)`
+  position: ${p => p.theme.position.relative};
+  top: 0;
+  left: 77px;
   background-color: ${p => p.theme.colors.borderColor};
   color: ${p => p.theme.colors.secondaryTextColor};
   border-radius: ${p => p.theme.radii.sm};

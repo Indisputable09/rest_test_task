@@ -30,7 +30,7 @@ const UserItem = () => {
   };
 
   const debouncedHandleCoordinates = useMemo(
-    () => debounce(handleCoordinates, 100),
+    () => debounce(handleCoordinates, 50),
     []
   );
 

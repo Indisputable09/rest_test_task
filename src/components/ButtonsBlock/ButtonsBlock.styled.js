@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const ButtonListItem = styled.li`
   :last-child {
+    display: flex;
+    align-items: center;
     margin-left: 10px;
   }
 `;

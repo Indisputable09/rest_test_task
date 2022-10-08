@@ -1,3 +1,5 @@
+import { RiAccountCircleFill } from 'react-icons/ri';
+import { useMedia } from 'react-use';
 import { useUsers } from 'hooks/UsersContext';
 import { Box } from 'components/Box';
 import { SignUpButton, UsersButton } from 'components/Button/Button.styled';
@@ -5,6 +7,7 @@ import { ButtonListItem, UserName } from './ButtonsBlock.styled';
 
 const ButtonsBlock = () => {
   const { userName, usersRef, signUpRef } = useUsers();
+  const isNotMobile = useMedia('(min-width: 768px)');
 
   const handleClick = e => {
     if (e.target.name === 'users') {
@@ -23,7 +26,11 @@ const ButtonsBlock = () => {
       </ButtonListItem>
       <ButtonListItem>
         {userName ? (
-          <UserName>{userName}</UserName>
+          isNotMobile ? (
+            <UserName>{userName}</UserName>
+          ) : (
+            <RiAccountCircleFill size={34} />
+          )
         ) : (
           <SignUpButton onClick={handleClick} ref={signUpRef} name="sign-up">
             Sign up

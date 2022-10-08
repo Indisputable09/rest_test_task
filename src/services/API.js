@@ -38,7 +38,6 @@ export async function getUserById(id) {
       return;
     }
     const user = await axios.get(`users/${id}`);
-    console.log('User ', user);
     return user.data.user;
   } catch (error) {
     return error.response.data.success;

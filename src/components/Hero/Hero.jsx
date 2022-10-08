@@ -1,6 +1,6 @@
+import { useUsers } from 'hooks/UsersContext';
 import { SignUpButton } from 'components/Button/Button.styled';
 import Container from 'components/Container';
-import { useUsers } from 'hooks/UsersContext';
 import { HeroSection, HeroText, HeroTitle } from './Hero.styled';
 
 const Hero = () => {

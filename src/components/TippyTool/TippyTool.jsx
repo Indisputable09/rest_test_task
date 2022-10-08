@@ -1,6 +1,7 @@
 import Tippy from '@tippyjs/react/headless';
 import { useSpring } from 'framer-motion';
 import { TippyBox } from './TippyTool.styled';
+
 const TippyTool = ({ children, description }) => {
   const springConfig = { damping: 15, stiffness: 300 };
   const initialScale = 0.5;

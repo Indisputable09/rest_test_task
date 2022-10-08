@@ -7,7 +7,6 @@ export const theme = {
     mainBg: '#F8F8F8',
     primary: '#F4E041',
     secondary: '#00BDD3',
-    // background: '#F8F8F8',
     hover: '#FFE302',
     disabled: '#B4B4B4',
     disabledText: 'rgba(255, 255, 255, 0.87)',

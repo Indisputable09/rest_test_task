@@ -59,7 +59,6 @@ export const App = () => {
           return;
         }
         setStatus(resolved);
-        console.log('~ fetchedUsers', users);
         if (page === 1) {
           setfetchedUsers(users);
         } else if (page !== 1) {
@@ -67,7 +66,6 @@ export const App = () => {
         }
         return;
       } catch (error) {
-        console.log(error);
         setStatus(rejected);
       }
     })();
@@ -141,18 +139,6 @@ export const App = () => {
                   />
                 </Container>
               </Box>
-              {/* {loggedIn && (
-                <Box pt="10" textAlign="center">
-                  <Container>
-                    <Userlist
-                      showMoreButtonRef={showMoreButtonRef}
-                      enoughUsers={ENOUGH_USERS}
-                      status={status}
-                      handlePageIncrement={handlePageIncrement}
-                    />
-                  </Container>
-                </Box>
-              )} */}
               <Box pt="10" pb="11" textAlign="center">
                 <Container>
                   {loggedIn ? <SuccessImage /> : <Registration />}

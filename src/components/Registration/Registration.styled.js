@@ -1,6 +1,6 @@
-import { UserListTitle } from 'components/Userlist/Userlist.styled';
 import { Field, Form } from 'formik';
 import styled from 'styled-components';
+import { UserListTitle } from 'components/Userlist/Userlist.styled';
 
 export const PostTitle = styled(UserListTitle)``;
 

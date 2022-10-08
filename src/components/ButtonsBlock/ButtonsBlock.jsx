@@ -1,7 +1,7 @@
-import { SignUpButton, UsersButton } from 'components/Button/Button.styled';
-import { Box } from 'components/Box';
-import { ButtonListItem, UserName } from './ButtonsBlock.styled';
 import { useUsers } from 'hooks/UsersContext';
+import { Box } from 'components/Box';
+import { SignUpButton, UsersButton } from 'components/Button/Button.styled';
+import { ButtonListItem, UserName } from './ButtonsBlock.styled';
 
 const ButtonsBlock = () => {
   const { userName, usersRef, signUpRef } = useUsers();

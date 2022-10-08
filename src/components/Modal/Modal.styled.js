@@ -1,4 +1,4 @@
-import { UserCard } from 'components/UserItem/UserItem.styled';
+import { UserCard } from 'components/UserListItemCard/UserListItemCard.styled';
 import styled from 'styled-components';
 
 export const Overlay = styled.div`
@@ -24,13 +24,20 @@ export const ModalWindow = styled.div`
     ${p => (p.showModal ? 'scale(1)' : 'scale(0)')};
   background-color: ${p => p.theme.colors.cardBg};
   border-radius: ${p => p.theme.radii.card};
-  width: 328px;
   transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  width: 328px;
+
+  @media screen and (min-width: 768px) {
+    width: 344px;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 282px;
+  }
+  @media screen and (min-width: 2560px) {
+    width: 370px;
+  }
 
   & > ${UserCard} {
     cursor: unset;
   }
 `;
-
-// top 500ms cubic-bezier(0.4, 0, 0.2, 1),
-//     left 500ms cubic-bezier(0.4, 0, 0.2, 1)

@@ -8,7 +8,6 @@ import {
   background,
   border,
   position,
-  // shadow,
   typography,
 } from 'styled-system';
 
@@ -21,6 +20,5 @@ export const Box = styled('section')(
   background,
   border,
   position,
-  // shadow,
   typography
 );

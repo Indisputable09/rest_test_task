@@ -1,4 +1,9 @@
+import { useState } from 'react';
 import { Formik, ErrorMessage } from 'formik';
+import { postUser } from 'services/API';
+import { useUsers } from 'hooks/UsersContext';
+import { SignupSchema } from 'constants/formValidationConstants';
+import { USER_ID_LS } from 'constants/constants';
 import {
   ErrorText,
   FormStyled,
@@ -6,12 +11,7 @@ import {
   PostTitle,
 } from './Registration.styled';
 import { SignUpButton } from 'components/Button/Button.styled';
-import { useState } from 'react';
-import { USER_ID_LS } from 'constants/constants';
-import { postUser } from 'services/API';
 import Loader from 'Icons/Loader';
-import { SignupSchema } from 'constants/formValidationConstants';
-import { useUsers } from 'hooks/UsersContext';
 import NameInput from 'components/NameInput';
 import EmailInput from 'components/EmailInput';
 import PhoneInput from 'components/PhoneInput';
@@ -86,9 +86,7 @@ const Registration = () => {
       } else if (response.status !== 201) {
         setPostError(response.data.message);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

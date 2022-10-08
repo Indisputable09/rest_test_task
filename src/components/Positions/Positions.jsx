@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import { fetchPositions } from 'services/API';
 import {
   CustomRadioButton,
   LabelText,
   PositionsItem,
   RadioButton,
 } from './Positions.styled';
-import { fetchPositions } from 'services/API';
 
 const Positions = ({ handleChange }) => {
   const [positions, setPositions] = useState([]);
@@ -16,9 +16,7 @@ const Positions = ({ handleChange }) => {
       try {
         const response = await fetchPositions();
         setPositions(response);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     })();
   }, []);
 
